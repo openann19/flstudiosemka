@@ -90,6 +90,9 @@ class Quantizer {
   }
 }
 
+// ES6 export
+export { Quantizer };
+
 // Export for module systems
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = { Quantizer };

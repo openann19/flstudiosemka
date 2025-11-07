@@ -20,7 +20,7 @@ interface UsePlaylistProps {
 }
 
 // Parameter names in function types are for documentation only
-/* eslint-disable no-unused-vars */
+ 
 interface UsePlaylistReturn {
   arrangements: Arrangement[];
   currentArrangementId: string | null;
@@ -48,7 +48,7 @@ interface UsePlaylistReturn {
   initializeDefaultArrangement: () => void;
   getCurrentArrangement: () => Arrangement | null;
 }
-/* eslint-enable no-unused-vars */
+ 
 
 export function usePlaylist({
   beatsPerBar,

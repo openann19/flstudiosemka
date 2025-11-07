@@ -186,7 +186,7 @@ class SimpleSynthProcessor extends AudioWorkletProcessor {
    * Update envelope
    */
   private updateEnvelope(voice: Voice, sampleRate: number): number {
-    const dt = 1.0 / sampleRate;
+    const _dt = 1.0 / sampleRate;
     const now = currentTime;
     const elapsed = now - voice.startTime;
     
@@ -201,7 +201,7 @@ class SimpleSynthProcessor extends AudioWorkletProcessor {
         }
         break;
         
-      case 'decay':
+      case 'decay': {
         const decayElapsed = now - voice.startTime;
         if (decayElapsed < voice.decayTime) {
           const t = decayElapsed / voice.decayTime;
@@ -211,6 +211,7 @@ class SimpleSynthProcessor extends AudioWorkletProcessor {
           voice.envelopePhase = 'sustain';
         }
         break;
+      }
         
       case 'sustain':
         voice.envelopeValue = voice.sustainLevel;
@@ -236,7 +237,7 @@ class SimpleSynthProcessor extends AudioWorkletProcessor {
   /**
    * Process audio (called by AudioWorklet system)
    */
-  process(inputs: Float32Array[][], outputs: Float32Array[][], _parameters: Record<string, Float32Array>): boolean {
+  process(_inputs: Float32Array[][], outputs: Float32Array[][], __parameters: Record<string, Float32Array>): boolean {
     const output = outputs[0];
     if (!output || output.length === 0) {
       return true;

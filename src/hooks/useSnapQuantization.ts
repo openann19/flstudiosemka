@@ -12,14 +12,14 @@ interface UseSnapQuantizationProps {
 }
 
 // Parameter names in function types are for documentation only
-/* eslint-disable no-unused-vars */
+ 
 interface UseSnapQuantizationReturn {
   snapSetting: SnapSetting;
   setSnapSetting: (setting: SnapSetting) => void;
   getSnapInterval: () => number;
   quantizeBeat: (beat: number, mode?: 'nearest' | 'floor' | 'ceil') => number;
 }
-/* eslint-enable no-unused-vars */
+ 
 
 /**
  * Hook for managing snap settings and quantization

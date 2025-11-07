@@ -26,9 +26,9 @@ interface UseArrangementManagerReturn {
 }
 
 // Parameter names in function types are for documentation only
-/* eslint-disable no-unused-vars */
+ 
 type BarsToBeatsFunction = (bars: number, beatsPerBar: number) => number;
-/* eslint-enable no-unused-vars */
+ 
 
 const TRACK_COLOR_PALETTE = ['#FF9933', '#FF5E57', '#00C5FF', '#8C5AFF', '#FFD166', '#6DD400', '#F6A6FF', '#4CD964'];
 
