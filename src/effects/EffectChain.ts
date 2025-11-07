@@ -138,8 +138,8 @@ export class EffectChain {
     if (removed && removed.effect.cleanup) {
       try {
         removed.effect.cleanup();
-      } catch {
-        logger.error('EffectChain: Error during effect cleanup', error);
+      } catch (_error) {
+        logger.error('EffectChain: Error during effect cleanup', _error);
       }
     }
 
@@ -274,8 +274,8 @@ export class EffectChain {
       if (slot.effect && slot.effect.cleanup) {
         try {
           slot.effect.cleanup();
-        } catch {
-          logger.error('EffectChain: Error during effect cleanup', error);
+        } catch (_error) {
+          logger.error('EffectChain: Error during effect cleanup', _error);
         }
       }
     }

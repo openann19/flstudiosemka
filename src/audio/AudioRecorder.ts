@@ -119,9 +119,9 @@ export class AudioRecorder {
       this.mediaSource.connect(this.inputGain);
 
       return true;
-    } catch {
-      logger.error('AudioRecorder: Failed to initialize', error);
-      throw new AudioContextError('Failed to initialize audio recording', { error });
+    } catch (_error) {
+      logger.error('AudioRecorder: Failed to initialize', _error);
+      throw new AudioContextError('Failed to initialize audio recording', { error: _error });
     }
   }
 
@@ -141,9 +141,9 @@ export class AudioRecorder {
           logger.error('AudioRecorder: Failed to initialize for arming', err);
         });
       }
-    } catch {
-      logger.error('AudioRecorder.armTrack error:', error);
-      throw error;
+    } catch (_error) {
+      logger.error('AudioRecorder.armTrack error:', _error);
+      throw _error;
     }
   }
 
@@ -179,9 +179,9 @@ export class AudioRecorder {
           logger.debug('AudioRecorder: Monitor already disconnected');
         }
       }
-    } catch {
-      logger.error('AudioRecorder.setMonitoring error:', error);
-      throw error;
+    } catch (_error) {
+      logger.error('AudioRecorder.setMonitoring error:', _error);
+      throw _error;
     }
   }
 
@@ -251,8 +251,8 @@ export class AudioRecorder {
           if (this.onRecordingComplete) {
             this.onRecordingComplete(trackId, audioBuffer);
           }
-        } catch {
-          logger.error('AudioRecorder: Failed to process recording', error);
+        } catch (_error) {
+          logger.error('AudioRecorder: Failed to process recording', _error);
         }
       };
 
@@ -265,9 +265,9 @@ export class AudioRecorder {
         this.inputGain.connect(recorderDestination);
         this.recorderDestination = recorderDestination;
       }
-    } catch {
-      logger.error('AudioRecorder: Failed to start recording', error);
-      throw error;
+    } catch (_error) {
+      logger.error('AudioRecorder: Failed to start recording', _error);
+      throw _error;
     }
   }
 
@@ -302,8 +302,8 @@ export class AudioRecorder {
           }
 
           resolve(audioBuffer);
-        } catch {
-          logger.error('AudioRecorder: Failed to process recording', error);
+        } catch (_error) {
+          logger.error('AudioRecorder: Failed to process recording', _error);
           resolve(null);
         }
       };
@@ -341,9 +341,9 @@ export class AudioRecorder {
       if (this.inputGain) {
         this.inputGain.gain.value = gain;
       }
-    } catch {
-      logger.error('AudioRecorder.setInputGain error:', error);
-      throw error;
+    } catch (_error) {
+      logger.error('AudioRecorder.setInputGain error:', _error);
+      throw _error;
     }
   }
 

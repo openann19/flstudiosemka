@@ -71,9 +71,9 @@ class BackendConnection {
       }
 
       return response;
-    } catch {
+    } catch (_error) {
       // Network error or timeout
-      if (error instanceof Error && error.name !== 'AbortError') {
+      if (_error instanceof Error && _error.name !== 'AbortError') {
         // Mark backend as unavailable
         this.available = false;
       }
@@ -101,9 +101,9 @@ class BackendConnection {
 
     try {
       return await response.json() as T;
-    } catch {
+    } catch (_error) {
        
-      console.warn('Failed to parse JSON response:', error);
+      console.warn('Failed to parse JSON response:', _error);
       return null;
     }
   }
