@@ -13,7 +13,7 @@ import { promises as fs } from 'fs';
 // Keep a global reference to prevent garbage collection
 let mainWindow: BrowserWindow | null = null;
 
-interface FileDialogResult {
+interface _FileDialogResult {
   canceled: boolean;
   filePath?: string;
   filePaths?: string[];

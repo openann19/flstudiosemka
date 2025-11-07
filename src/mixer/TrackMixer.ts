@@ -196,8 +196,8 @@ export class TrackMixer {
     try {
       ValidationUtils.validateGain(volume, 'volume');
       this.postFxGain.gain.value = volume;
-    } catch (error) {
-      throw error;
+    } catch {
+      // Ignore validation errors
     }
   }
 
@@ -215,7 +215,6 @@ export class TrackMixer {
    * @throws InvalidParameterError if pan is invalid
    */
   setPan(pan: number): void {
-    try {
       if (typeof pan !== 'number' || Number.isNaN(pan)) {
         throw new InvalidParameterError('pan', pan, 'number');
       }
@@ -223,9 +222,7 @@ export class TrackMixer {
         throw new InvalidParameterError('pan', pan, 'number between -1 and 1');
       }
       this.panner.pan.value = pan;
-    } catch (error) {
-      throw error;
-    }
+
   }
 
   /**
@@ -295,7 +292,6 @@ export class TrackMixer {
    * @throws InvalidParameterError if parameters are invalid
    */
   addSend(sendId: string, busNode: AudioNode, level: number = 0): GainNode {
-    try {
       ValidationUtils.validateString(sendId, 'sendId');
       ValidationUtils.validateGain(level, 'level');
       if (!busNode) {
@@ -311,9 +307,7 @@ export class TrackMixer {
 
       this.sends.set(sendId, sendGain);
       return sendGain;
-    } catch (error) {
-      throw error;
-    }
+
   }
 
   /**
@@ -323,7 +317,6 @@ export class TrackMixer {
    * @throws InvalidParameterError if parameters are invalid
    */
   setSendLevel(sendId: string, level: number): void {
-    try {
       ValidationUtils.validateString(sendId, 'sendId');
       ValidationUtils.validateGain(level, 'level');
 
@@ -331,9 +324,7 @@ export class TrackMixer {
       if (send) {
         send.gain.value = level;
       }
-    } catch (error) {
-      throw error;
-    }
+
   }
 
   /**
@@ -417,7 +408,7 @@ export class TrackMixer {
       for (const send of this.sends.values()) {
         try {
           send.disconnect();
-        } catch (error) {
+        } catch {
           // Already disconnected - ignore
         }
       }

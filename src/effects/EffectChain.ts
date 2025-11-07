@@ -78,7 +78,6 @@ export class EffectChain {
    * @throws InvalidParameterError if effect is invalid
    */
   addEffect(effect: Effect, position: number = -1): boolean {
-    try {
       if (!effect || !effect.inputNode || !effect.outputNode) {
         throw new InvalidParameterError('effect', effect, 'Effect with inputNode and outputNode');
       }
@@ -118,9 +117,7 @@ export class EffectChain {
       this._rebuildChain();
 
       return true;
-    } catch (error) {
-      throw error;
-    }
+
   }
 
   /**
@@ -141,7 +138,7 @@ export class EffectChain {
     if (removed && removed.effect.cleanup) {
       try {
         removed.effect.cleanup();
-      } catch (error) {
+      } catch {
         logger.error('EffectChain: Error during effect cleanup', error);
       }
     }
@@ -223,12 +220,12 @@ export class EffectChain {
         const effect = slot.effect;
         try {
           if (effect.inputNode) effect.inputNode.disconnect();
-        } catch (error) {
+        } catch {
           // Already disconnected - ignore
         }
         try {
           if (effect.outputNode) effect.outputNode.disconnect();
-        } catch (error) {
+        } catch {
           // Already disconnected - ignore
         }
       }
@@ -277,7 +274,7 @@ export class EffectChain {
       if (slot.effect && slot.effect.cleanup) {
         try {
           slot.effect.cleanup();
-        } catch (error) {
+        } catch {
           logger.error('EffectChain: Error during effect cleanup', error);
         }
       }

@@ -31,7 +31,7 @@ export interface EffectSlotProps {
 /**
  * Effect slot component
  */
-export function EffectSlot({
+export function EffectSlotComponent({
   slot,
   position,
   onAddEffect,
@@ -351,4 +351,7 @@ export function EffectSlot({
     </div>
   );
 }
+
+// Export with original name for compatibility
+export { EffectSlotComponent as EffectSlot };
 

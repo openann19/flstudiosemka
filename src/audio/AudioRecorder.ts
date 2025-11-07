@@ -119,7 +119,7 @@ export class AudioRecorder {
       this.mediaSource.connect(this.inputGain);
 
       return true;
-    } catch (error) {
+    } catch {
       logger.error('AudioRecorder: Failed to initialize', error);
       throw new AudioContextError('Failed to initialize audio recording', { error });
     }
@@ -141,7 +141,7 @@ export class AudioRecorder {
           logger.error('AudioRecorder: Failed to initialize for arming', err);
         });
       }
-    } catch (error) {
+    } catch {
       logger.error('AudioRecorder.armTrack error:', error);
       throw error;
     }
@@ -179,7 +179,7 @@ export class AudioRecorder {
           logger.debug('AudioRecorder: Monitor already disconnected');
         }
       }
-    } catch (error) {
+    } catch {
       logger.error('AudioRecorder.setMonitoring error:', error);
       throw error;
     }
@@ -251,7 +251,7 @@ export class AudioRecorder {
           if (this.onRecordingComplete) {
             this.onRecordingComplete(trackId, audioBuffer);
           }
-        } catch (error) {
+        } catch {
           logger.error('AudioRecorder: Failed to process recording', error);
         }
       };
@@ -265,7 +265,7 @@ export class AudioRecorder {
         this.inputGain.connect(recorderDestination);
         this.recorderDestination = recorderDestination;
       }
-    } catch (error) {
+    } catch {
       logger.error('AudioRecorder: Failed to start recording', error);
       throw error;
     }
@@ -302,7 +302,7 @@ export class AudioRecorder {
           }
 
           resolve(audioBuffer);
-        } catch (error) {
+        } catch {
           logger.error('AudioRecorder: Failed to process recording', error);
           resolve(null);
         }
@@ -341,7 +341,7 @@ export class AudioRecorder {
       if (this.inputGain) {
         this.inputGain.gain.value = gain;
       }
-    } catch (error) {
+    } catch {
       logger.error('AudioRecorder.setInputGain error:', error);
       throw error;
     }
@@ -383,7 +383,7 @@ export class AudioRecorder {
     if (this.inputGain) {
       try {
         this.inputGain.disconnect();
-      } catch (error) {
+      } catch {
         // Already disconnected - ignore
       }
     }
@@ -391,7 +391,7 @@ export class AudioRecorder {
     if (this.monitorGain) {
       try {
         this.monitorGain.disconnect();
-      } catch (error) {
+      } catch {
         // Already disconnected - ignore
       }
     }

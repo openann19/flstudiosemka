@@ -66,7 +66,7 @@ export function PianoRollWindow({
       editorRef.current = new PianoRollEditor(canvasRef.current, audioContext);
       quantizerRef.current = new Quantizer();
       quantizerRef.current.setGridSize(quantizeGrid);
-    } catch (error) {
+    } catch {
       // Error initializing editor
     }
 

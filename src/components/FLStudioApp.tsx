@@ -79,8 +79,8 @@ export function FLStudioApp(): JSX.Element {
   const audioServiceRef = useRef<AudioService | null>(null);
   const browserServiceRef = useRef<BrowserService | null>(null);
   const performanceMonitorRef = useRef<number | null>(null);
-  const lastPerformanceUpdateRef = useRef<number>(0);
-  const PERFORMANCE_THROTTLE_MS = 100; // 10fps for performance monitoring (less critical)
+  const _lastPerformanceUpdateRef = useRef<number>(0);
+  const _PERFORMANCE_THROTTLE_MS = 100; // 10fps for performance monitoring (less critical)
 
   // Initialize drum kits
   const drumKits = useDrumKits(audioEngine.audioContext, null);
@@ -127,12 +127,13 @@ export function FLStudioApp(): JSX.Element {
         return;
       }
 
-      tracks.tracks.forEach(async (track) => {
+      tracks.tracks.forEach((track) => {
         if (track.steps[currentStep] && !track.muted) {
-          try {
-            if (audioEngine.audioContext && audioEngine.audioContext.state === 'suspended') {
-              await audioEngine.audioContext.resume();
-            }
+          void (async () => {
+            try {
+              if (audioEngine.audioContext && audioEngine.audioContext.state === 'suspended') {
+                await audioEngine.audioContext.resume();
+              }
 
             if (audioEngine.audioContext && audioEngine.audioContext.state === 'running') {
               if (track.samplePlayer && typeof (window as { SamplePlayer?: unknown }).SamplePlayer !== 'undefined') {
@@ -160,6 +161,7 @@ export function FLStudioApp(): JSX.Element {
           } catch {
             // Silent error handling
           }
+          })();
         }
       });
     },
@@ -515,7 +517,7 @@ export function FLStudioApp(): JSX.Element {
           try {
             loopService.setLoopRegion(start, end);
             setLoopEnabled(true);
-          } catch (error) {
+          } catch {
             // Handle error silently or show user notification
           }
         }}

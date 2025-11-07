@@ -24,6 +24,16 @@ export function EffectParameterPanel({
   slot,
   onUpdateParameters,
 }: EffectParameterPanelProps): JSX.Element {
+  /**
+   * Handle parameter change
+   */
+  const handleParameterChange = useCallback(
+    (paramName: string, value: number): void => {
+      onUpdateParameters({ [paramName]: value });
+    },
+    [onUpdateParameters]
+  );
+
   if (!slot || !slot.effectType || !slot.effectInstance) {
     return (
       <div
@@ -54,16 +64,6 @@ export function EffectParameterPanel({
       </div>
     );
   }
-
-  /**
-   * Handle parameter change
-   */
-  const handleParameterChange = useCallback(
-    (paramName: string, value: number): void => {
-      onUpdateParameters({ [paramName]: value });
-    },
-    [onUpdateParameters]
-  );
 
   return (
     <div

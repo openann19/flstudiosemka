@@ -280,7 +280,7 @@ export class AudioRenderer {
 
       // Fallback to WAV if lamejs is not available
       return this.bufferToWAV(buffer, {});
-    } catch (error) {
+    } catch {
       // If encoding fails, fallback to WAV
       return this.bufferToWAV(buffer, {});
     }

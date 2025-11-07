@@ -87,7 +87,7 @@ class Logger {
    * Format log message
    * @private
    */
-  private formatMessage(level: string, message: string, ...args: unknown[]): string {
+  private formatMessage(level: string, message: string, ..._args: unknown[]): string {
     const parts: string[] = [];
 
     if (this.config.enableTimestamp) {

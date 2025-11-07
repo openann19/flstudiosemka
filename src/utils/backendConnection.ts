@@ -33,7 +33,7 @@ class BackendConnection {
       });
       
       this.available = response.ok;
-    } catch (error) {
+    } catch {
       // Backend not available - this is expected in standalone mode
       this.available = false;
       
@@ -71,7 +71,7 @@ class BackendConnection {
       }
 
       return response;
-    } catch (error) {
+    } catch {
       // Network error or timeout
       if (error instanceof Error && error.name !== 'AbortError') {
         // Mark backend as unavailable
@@ -101,7 +101,7 @@ class BackendConnection {
 
     try {
       return await response.json() as T;
-    } catch (error) {
+    } catch {
        
       console.warn('Failed to parse JSON response:', error);
       return null;

@@ -75,7 +75,6 @@ export class BusManager {
    * @throws InvalidParameterError if busId is invalid
    */
   createBus(busId: string, config: BusConfig = {}): Bus {
-    try {
       ValidationUtils.validateString(busId, 'busId');
 
       const { name = busId, effects = [], volume = 1.0 } = config;
@@ -112,9 +111,7 @@ export class BusManager {
 
       this.buses.set(busId, bus);
       return bus;
-    } catch (error) {
-      throw error;
-    }
+
   }
 
   /**
@@ -132,7 +129,6 @@ export class BusManager {
    * @throws InvalidParameterError if busId is invalid
    */
   removeBus(busId: string): void {
-    try {
       ValidationUtils.validateString(busId, 'busId');
 
       const bus = this.buses.get(busId);
@@ -146,9 +142,7 @@ export class BusManager {
         bus.effectChain.clear();
         this.buses.delete(busId);
       }
-    } catch (error) {
-      throw error;
-    }
+
   }
 
   /**
@@ -158,7 +152,6 @@ export class BusManager {
    * @throws InvalidParameterError if parameters are invalid
    */
   setBusVolume(busId: string, volume: number): void {
-    try {
       ValidationUtils.validateString(busId, 'busId');
       ValidationUtils.validateGain(volume, 'volume');
 
@@ -167,9 +160,7 @@ export class BusManager {
         bus.volume = volume;
         bus.outputNode.gain.value = volume;
       }
-    } catch (error) {
-      throw error;
-    }
+
   }
 
   /**
@@ -186,12 +177,9 @@ export class BusManager {
    * @throws InvalidParameterError if volume is invalid
    */
   setMasterVolume(volume: number): void {
-    try {
       ValidationUtils.validateGain(volume, 'volume');
       this.masterBus.gain.value = volume;
-    } catch (error) {
-      throw error;
-    }
+
   }
 
   /**

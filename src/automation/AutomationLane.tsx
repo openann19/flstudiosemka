@@ -176,10 +176,11 @@ export class AutomationLane {
       case 'step':
         return before.value;
 
-      case 'smooth':
+      case 'smooth': {
         // Smooth curve (ease in/out)
         const smoothT = t * t * (3 - 2 * t);
         return before.value + (after.value - before.value) * smoothT;
+      }
 
       case 'linear':
       default:

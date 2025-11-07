@@ -208,7 +208,7 @@ export class EQ {
       this.bypassGain.disconnect();
       this.characterProcessor.inputNode.disconnect();
       this.linearPhaseProcessor.inputNode.disconnect();
-    } catch (error) {
+    } catch {
       // Ignore disconnection errors
     }
 
@@ -217,7 +217,7 @@ export class EQ {
       try {
         band.inputNode.disconnect();
         band.outputNode.disconnect();
-      } catch (error) {
+      } catch {
         // Ignore
       }
     }
@@ -690,7 +690,7 @@ export class EQ {
       this.wetGain.disconnect();
       this.bypassGain.disconnect();
       this.outputGain.disconnect();
-    } catch (error) {
+    } catch {
       // Already disconnected - ignore
     }
   }
