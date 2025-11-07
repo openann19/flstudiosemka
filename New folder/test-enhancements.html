@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Channel Rack Enhancements</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #fff;
+        }
+        .instructions {
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #FF7800;
+        }
+        .instructions h2 {
+            margin-top: 0;
+            color: #FF7800;
+        }
+        .instructions ul {
+            line-height: 1.8;
+        }
+        .instructions code {
+            background: #1a1a1a;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #FF7800;
+        }
+        iframe {
+            width: 100%;
+            height: 800px;
+            border: 2px solid #FF7800;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="instructions">
+        <h2>🎛️ Testing Channel Rack Enhancements</h2>
+        <h3>How to Test:</h3>
+        <ul>
+            <li><strong>Right-click any track</strong> in the channel rack to see the context menu</li>
+            <li>Look for menu items: Edit Parameters, Piano Roll, Fill options, Copy/Paste, etc.</li>
+            <li>Click <code>Edit Parameters</code> to open the backdrop blur modal</li>
+            <li>Try adjusting sliders (Volume, Pan, ADSR, Filter, etc.)</li>
+            <li>Test pattern operations: Fill Each 4, Randomize, Clear, etc.</li>
+            <li>Try keyboard shortcuts: <code>E</code> for parameters, <code>Esc</code> to close</li>
+        </ul>
+        <h3>Open Browser Console (F12) to see:</h3>
+        <ul>
+            <li>✅ "Professional Channel Rack Enhancements loaded" message</li>
+            <li>Any errors or warnings</li>
+        </ul>
+    </div>
+    
+    <iframe src="http://localhost:8001/index.html"></iframe>
+</body>
+</html>

@@ -1,0 +1,181 @@
+/**
+ * Component Styles - FL Studio component styling
+ * @module styles/components
+ */
+
+/* Button Styles */
+.fl-button {
+  outline: none;
+  will-change: transform, box-shadow;
+}
+
+.fl-button:focus {
+  outline: 2px solid var(--fl-orange);
+  outline-offset: 2px;
+}
+
+.fl-button:focus-visible {
+  outline: 2px solid var(--fl-orange);
+  outline-offset: 2px;
+}
+
+.fl-button:active {
+  transform: translateY(1px);
+  box-shadow: var(--shadow-inset);
+}
+
+.fl-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.fl-button.loading {
+  pointer-events: none;
+}
+
+/* Panel Styles */
+.fl-panel {
+  position: relative;
+}
+
+/* Knob Styles */
+.fl-knob-container {
+  position: relative;
+  will-change: transform;
+}
+
+.fl-knob-container:hover .fl-knob-body {
+  box-shadow: var(--shadow-inset), var(--shadow-lg), var(--shadow-glow);
+}
+
+.fl-knob:focus {
+  outline: 2px solid var(--fl-orange);
+  outline-offset: 2px;
+}
+
+/* Fader Styles */
+.fl-fader-container {
+  position: relative;
+  will-change: transform;
+}
+
+.fl-fader-thumb {
+  will-change: transform, top;
+}
+
+.fl-fader-thumb:hover {
+  background: linear-gradient(135deg, #5a5a5a 0%, #3a3a3a 100%);
+  box-shadow: var(--shadow-lg);
+}
+
+.fl-fader:focus {
+  outline: 2px solid var(--fl-orange);
+  outline-offset: 2px;
+}
+
+/* Step Button Styles */
+.fl-step-button {
+  will-change: transform, opacity;
+}
+
+.fl-step-button:hover {
+  background: linear-gradient(180deg, var(--fl-bg-hover) 0%, var(--fl-bg-medium) 100%);
+  border-color: var(--fl-border-light);
+  transform: scale(1.05);
+}
+
+.fl-step-button.active:hover {
+  background: linear-gradient(180deg, var(--fl-orange-hover) 0%, var(--fl-orange) 100%);
+}
+
+.fl-step-button:focus {
+  outline: 2px solid var(--fl-orange);
+  outline-offset: 2px;
+}
+
+.fl-step-button.accent {
+  background: linear-gradient(180deg, var(--fl-red) 0%, #C0392B 100%);
+}
+
+/* Window Styles */
+.fl-window {
+  font-family: var(--font-ui);
+  will-change: transform;
+}
+
+.fl-window-titlebar {
+  user-select: none;
+}
+
+.fl-window-titlebar button {
+  transition: background 0.1s ease;
+}
+
+.fl-window-titlebar button:hover {
+  background: var(--fl-bg-hover);
+}
+
+.fl-window-titlebar button:active {
+  background: var(--fl-bg-medium);
+  transform: scale(0.95);
+}
+
+.fl-window-titlebar button:focus {
+  outline: 2px solid var(--fl-orange);
+  outline-offset: 2px;
+}
+
+/* Context Menu Styles */
+.fl-context-menu {
+  font-family: var(--font-ui);
+  will-change: transform, opacity;
+}
+
+.fl-context-menu-item {
+  transition: background 0.1s ease;
+}
+
+.fl-context-menu-item:hover {
+  background: var(--fl-bg-hover);
+}
+
+.fl-context-menu-item:focus {
+  outline: 2px solid var(--fl-orange);
+  outline-offset: -2px;
+}
+
+/* Hint Panel Styles */
+.fl-hint-panel {
+  font-family: var(--font-ui);
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+/* LED Styles */
+.fl-led-indicator {
+  will-change: opacity, box-shadow;
+}
+
+.fl-led-indicator.pulsing {
+  animation: pulse 1s ease-in-out infinite;
+}
+
+/* View Tabs Styles */
+.view-tab {
+  will-change: background, color, transform;
+}
+
+.view-tab:focus {
+  outline: 2px solid var(--fl-orange);
+  outline-offset: 2px;
+}
+
+/* Status Bar Styles */
+.fl-status-bar {
+  will-change: contents;
+}
+
+.fl-status-bar > div[role] {
+  transition: opacity 0.2s ease;
+}
+

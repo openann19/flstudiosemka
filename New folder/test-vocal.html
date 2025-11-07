@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vocal Studio Test</title>
+    <style>
+        body { background: #1a1a1a; color: #fff; font-family: Arial; padding: 20px; }
+        #status { padding: 20px; background: #2a2a2a; border-radius: 8px; margin: 20px 0; }
+        .error { color: #ff4444; }
+        .success { color: #44ff44; }
+    </style>
+</head>
+<body>
+    <h1>🎤 Vocal Studio Test</h1>
+    <div id="status">Loading...</div>
+    
+    <script>
+        // Mock FL Studio
+        console.log('Creating mock FL Studio...');
+        window.flStudio = {
+            audioContext: new (window.AudioContext || window.webkitAudioContext)(),
+            bpm: 140
+        };
+        console.log('FL Studio mock ready:', window.flStudio);
+    </script>
+    
+    <script src="vocalStudio.js"></script>
+    
+    <script>
+        setTimeout(() => {
+            const status = document.getElementById('status');
+            const checks = [];
+            
+            // Check 1: FL Studio exists
+            checks.push({
+                name: 'FL Studio exists',
+                pass: !!window.flStudio,
+                value: window.flStudio ? '✓' : '✗'
+            });
+            
+            // Check 2: Audio context exists
+            checks.push({
+                name: 'Audio context exists',
+                pass: !!(window.flStudio && window.flStudio.audioContext),
+                value: window.flStudio?.audioContext ? '✓' : '✗'
+            });
+            
+            // Check 3: Vocal studio exists
+            checks.push({
+                name: 'Vocal studio instance exists',
+                pass: !!window.vocalStudio,
+                value: window.vocalStudio ? '✓' : '✗'
+            });
+            
+            // Check 4: Button exists
+            const btn = document.getElementById('vocal-studio-floating-btn');
+            checks.push({
+                name: 'Floating button exists',
+                pass: !!btn,
+                value: btn ? '✓ (visible: ' + (btn.offsetParent !== null) + ')' : '✗'
+            });
+            
+            // Check 5: Overlay exists
+            const overlay = document.getElementById('vocal-studio-overlay');
+            checks.push({
+                name: 'Overlay exists',
+                pass: !!overlay,
+                value: overlay ? '✓' : '✗'
+            });
+            
+            let html = '<h3>System Checks:</h3><ul>';
+            checks.forEach(check => {
+                const className = check.pass ? 'success' : 'error';
+                html += `<li class="${className}"><strong>${check.name}:</strong> ${check.value}</li>`;
+            });
+            html += '</ul>';
+            
+            const allPass = checks.every(c => c.pass);
+            if (allPass) {
+                html += '<p class="success">✅ All checks passed! Click the pink 🎤 button in bottom-right.</p>';
+            } else {
+                html += '<p class="error">❌ Some checks failed. Check browser console (F12) for errors.</p>';
+            }
+            
+            status.innerHTML = html;
+            
+            // Log to console
+            console.log('=== VOCAL STUDIO TEST RESULTS ===');
+            checks.forEach(check => console.log(check.name + ':', check.pass ? '✓' : '✗', check.value));
+            console.log('=================================');
+            
+        }, 1000);
+    </script>
+</body>
+</html>

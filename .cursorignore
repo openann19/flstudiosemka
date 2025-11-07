@@ -1,0 +1,111 @@
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Build outputs
+dist/
+build/
+out/
+*.min.js
+*.min.css
+*.bundle.js
+*.d.ts
+*.d.ts.map
+
+# Test coverage
+coverage/
+.nyc_output/
+*.lcov
+*.test.js.map
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# IDE/Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# Temporary files
+*.tmp
+*.temp
+*.cache
+.cache/
+.temp/
+
+# Backup files
+*.backup
+*.bak
+*.old
+*.orig
+
+# Audio files (large binary files)
+*.wav
+*.mp3
+*.flac
+*.aac
+*.ogg
+*.m4a
+*.wma
+*.aiff
+*.au
+
+# Reports and documentation (auto-generated)
+reports/
+*.md.backup
+
+# Environment files
+.env
+.env.local
+.env.*.local
+.env.production
+
+# Electron build artifacts
+apps/desktop/dist/
+apps/desktop/out/
+
+# Large data files
+*.db
+*.sqlite
+*.sqlite3
+
+# Compiled files
+*.class
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.so
+*.dylib
+*.dll
+
+# Package manager files
+.npm/
+.yarn/
+.pnpm-store/
+

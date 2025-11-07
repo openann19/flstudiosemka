@@ -1,0 +1,58 @@
+/**
+ * Main styles entry point
+ * Imports all design system and component styles
+ * @module styles/index
+ */
+
+@import './design-system.css';
+@import './animations.css';
+@import './components.css';
+@import './layout.css';
+
+/* Additional global styles */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: var(--scrollbar-width);
+  height: var(--scrollbar-width);
+}
+
+::-webkit-scrollbar-track {
+  background: var(--fl-bg-darkest);
+  border: 1px solid var(--fl-border-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--fl-bg-medium) 0%, var(--fl-bg-dark) 100%);
+  border: 1px solid var(--fl-border-dark);
+  border-radius: var(--radius-sm);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--fl-bg-hover) 0%, var(--fl-bg-medium) 100%);
+}
+
+/* Focus styles */
+*:focus-visible {
+  outline: 2px solid var(--fl-orange);
+  outline-offset: 2px;
+}
+
+/* Disabled state */
+*:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+

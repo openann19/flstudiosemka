@@ -1,0 +1,126 @@
+/**
+ * Animations - Keyframe animations for FL Studio UI
+ * @module styles/animations
+ */
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 8px rgba(255, 153, 0, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(255, 153, 0, 0.6);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.fl-step-button.current {
+  animation: pulse 0.5s ease-in-out;
+}
+
+.fl-led-indicator.active {
+  animation: blink 1s ease-in-out infinite;
+}
+
+/* Performance optimizations */
+.fl-button,
+.fl-fader-thumb,
+.fl-knob-body,
+.fl-step-button {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Smooth transitions */
+.fl-button,
+.fl-fader,
+.fl-knob,
+.fl-step-button,
+.view-tab {
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* GPU acceleration hints */
+.fl-window,
+.fl-hint-panel,
+.fl-context-menu {
+  transform: translateZ(0);
+  will-change: transform, opacity;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FL STUDIO</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎵</text></svg>">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Main Toolbar -->
+        <header class="header">
+            <div class="brand">FL STUDIO 21</div>
+            <div class="file-menu">
+                <button class="menu-btn">FILE</button>
+                <button class="menu-btn">EDIT</button>
+                <button class="menu-btn">ADD</button>
+                <button class="menu-btn">PATTERNS</button>
+                <button class="menu-btn">VIEW</button>
+                <button class="menu-btn">OPTIONS</button>
+                <button class="menu-btn">TOOLS</button>
+                <button class="menu-btn">HELP</button>
+            </div>
+            <div class="view-tabs">
+                <button class="view-tab" data-view="browser">BROWSER</button>
+                <button class="view-tab" data-view="mixer">MIXER</button>
+                <button class="view-tab active" data-view="channel-rack">CHANNEL RACK</button>
+                <button class="view-tab" data-view="playlist">PLAYLIST</button>
+                <button class="view-tab" data-view="piano-roll">PIANO ROLL</button>
+                <button class="view-tab" data-view="drum-machine">DRUM MACHINE</button>
+            </div>
+            <input type="file" id="import-input" accept=".flp,.json" style="display: none;">
+        </header>
+
+        <!-- Transport Controls -->
+        <div class="transport">
+            <div class="transport-controls">
+                <button class="transport-btn" id="stop-btn" title="Stop (Space)">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                        <rect x="5" y="5" width="14" height="14" rx="1"/>
+                    </svg>
+                </button>
+                <button class="transport-btn" id="play-btn" title="Play (Space)">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                        <polygon points="7,5 19,12 7,19"/>
+                    </svg>
+                </button>
+                <button class="transport-btn" id="record-btn" title="Record (Num *)">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                        <circle cx="12" cy="12" r="7"/>
+                    </svg>
+                </button>
+                <div style="width: 1px; height: 24px; background: var(--fl-border-dark); margin: 0 8px;"></div>
+                <button class="transport-btn" id="pattern-mode-btn" title="Pattern/Song Mode">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                        <rect x="4" y="4" width="7" height="7"/>
+                        <rect x="13" y="4" width="7" height="7"/>
+                        <rect x="4" y="13" width="7" height="7"/>
+                        <rect x="13" y="13" width="7" height="7"/>
+                    </svg>
+                </button>
+                <button class="transport-btn" id="metronome-btn" title="Metronome">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2L6 20h12L12 2z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="transport-info">
+                <div class="bpm-control">
+                    <span class="label">TEMPO</span>
+                    <button class="spinner-btn" id="bpm-down">−</button>
+                    <input type="number" id="bpm-input" value="140" min="60" max="999" aria-label="BPM value">
+                    <button class="spinner-btn" id="bpm-up">+</button>
+                </div>
+                <div class="pattern-selector">
+                    <span class="label">PAT</span>
+                    <select id="pattern-select" aria-label="Pattern selector">
+                        <option value="1">1 - Pattern 1</option>
+                    </select>
+                </div>
+                <div class="time-display" id="time-display">00:00:00</div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Browser Panel -->
+            <div class="panel browser-panel" id="browser-panel" style="display: none;">
+                <div class="browser-header">
+                    <div class="browser-tabs">
+                        <button class="browser-tab active" data-category="presets">Presets</button>
+                        <button class="browser-tab" data-category="samples">Samples</button>
+                        <button class="browser-tab" data-category="plugins">Plugins</button>
+                    </div>
+                    <div class="search-box">
+                        <input type="text" id="browser-search" placeholder="Search sounds...">
+                    </div>
+                </div>
+                <div class="browser-content">
+                    <div class="browser-tree">
+                        <div class="tree-category" data-category="presets">
+                            <div class="category-header">Presets</div>
+                            <div class="category-content">
+                                <div class="tree-item" data-type="folder" data-name="Drums">Drums</div>
+                                <div class="tree-item" data-type="folder" data-name="Synths">Synths</div>
+                                <div class="tree-item" data-type="folder" data-name="Effects">Effects</div>
+                            </div>
+                        </div>
+                        <div class="tree-category" data-category="samples">
+                            <div class="category-header">Samples</div>
+                            <div class="category-content">
+                                <div class="tree-item" data-type="folder" data-name="Kicks">Kicks</div>
+                                <div class="tree-item" data-type="folder" data-name="Snares">Snares</div>
+                                <div class="tree-item" data-type="folder" data-name="HiHats">Hi-Hats</div>
+                            </div>
+                        </div>
+                        <div class="tree-category" data-category="plugins">
+                            <div class="category-header">Plugins</div>
+                            <div class="category-content">
+                                <div class="tree-item" data-type="plugin" data-name="Fruity Reverb">Fruity Reverb</div>
+                                <div class="tree-item" data-type="plugin" data-name="EQ">EQ</div>
+                                <div class="tree-item" data-type="plugin" data-name="Compressor">Compressor</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="browser-detail">
+                        <div class="detail-header">Select a category to browse sounds</div>
+                        <div class="sound-grid" id="sound-grid"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Channel Rack -->
+            <div class="panel channel-rack-panel" id="channel-rack-panel" style="display: block;">
+                <div class="channel-rack" id="channel-rack">
+                    <!-- Tracks will be dynamically added here -->
+                </div>
+            </div>
+
+            <!-- Playlist Panel -->
+            <div class="panel playlist-panel" id="playlist-panel">
+                <div class="timeline-header">
+                    <div class="timeline-left">
+                        <div class="timeline-info">
+                            <span class="label">Playlist</span>
+                            <span id="timeline-position">00:00:00</span>
+                        </div>
+                        <div class="arrangement-menu">
+                            <label for="arrangement-select">Arrangement</label>
+                            <select id="arrangement-select" aria-label="Arrangement menu">
+                                <option value="arrangement-1">Arrangement 1</option>
+                            </select>
+                            <button class="arrangement-manage" id="manage-arrangements" title="Manage arrangements">⋮</button>
+                        </div>
+                    </div>
+                    <div class="timeline-right">
+                        <div class="tools-menu" id="playlist-tools" role="toolbar" aria-label="Playlist tools">
+                            <button class="tool-btn active" data-tool="draw" title="Draw (P)">Draw</button>
+                            <button class="tool-btn" data-tool="paint" title="Paint (B)">Paint</button>
+                            <button class="tool-btn" data-tool="delete" title="Delete (Del)">Delete</button>
+                            <button class="tool-btn" data-tool="mute" title="Mute (T)">Mute</button>
+                            <button class="tool-btn" data-tool="slice" title="Slice (C)">Slice</button>
+                            <button class="tool-btn" data-tool="select" title="Select (E)">Select</button>
+                            <button class="tool-btn" data-tool="slip" title="Slip Edit (S)">Slip</button>
+                        </div>
+                        <div class="snap-panel">
+                            <label for="snap-select">Snap</label>
+                            <select id="snap-select" aria-label="Snap resolution">
+                                <option value="bar">Bar</option>
+                                <option value="beat" selected>Beat</option>
+                                <option value="step">Step</option>
+                                <option value="none">None</option>
+                            </select>
+                        </div>
+                        <div class="timeline-zoom">
+                            <button class="zoom-btn" id="zoom-in" title="Zoom in">+</button>
+                            <button class="zoom-btn" id="zoom-out" title="Zoom out">-</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-marker-row" id="time-marker-strip" aria-label="Time markers"></div>
+                <div class="playlist-timeline">
+                    <div class="time-ruler" id="time-ruler" aria-label="Time ruler"></div>
+                    <div class="timeline-tracks-wrapper">
+                        <div class="timeline-tracks" id="timeline-tracks">
+                            <!-- Timeline tracks will be populated by JS -->
+                        </div>
+                    </div>
+                    <div class="playhead" id="playhead" aria-hidden="true">
+                        <div class="playhead-head"></div>
+                    </div>
+                    <div class="timeline-grid-overlay" id="timeline-grid">
+                        <!-- Grid lines will be drawn by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mixer Panel -->
+            <div class="panel mixer-panel" id="mixer-panel">
+                <div class="mixer-header">
+                    <div class="mixer-master">
+                        <div class="mixer-channel master-channel">
+                            <div class="channel-name">Master</div>
+                            <div class="mixer-fader" data-track="master">
+                                <div class="fader-handle"></div>
+                            </div>
+                            <div class="mixer-controls">
+                                <div class="mixer-btn active">M</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mixer-tracks" id="mixer-channels">
+                    <!-- Mixer channels will be populated by JS -->
+                </div>
+            </div>
+
+            <!-- Pattern Editor -->
+            <div class="panel pattern-editor-panel" id="pattern-panel">
+                <div class="pattern-toolbar">
+                    <div class="pattern-info">
+                        <span class="label">Pattern:</span>
+                        <select id="pattern-editor-select" aria-label="Pattern editor selector">
+                            <option value="1">01</option>
+                        </select>
+                    </div>
+                    <div class="pattern-tools">
+                        <button class="tool-btn" id="draw-tool">Draw</button>
+                        <button class="tool-btn" id="erase-tool">Erase</button>
+                        <button class="tool-btn" id="select-tool">Select</button>
+                    </div>
+                    <div class="pattern-zoom">
+                        <button class="zoom-btn" id="pattern-zoom-in">+</button>
+                        <button class="zoom-btn" id="pattern-zoom-out">-</button>
+                    </div>
+                </div>
+                <div class="pattern-grid">
+                    <div class="piano-roll" id="piano-roll">
+                        <div class="piano-keys" id="piano-keys">
+                            <!-- Piano keys will be populated by JS -->
+                        </div>
+                        <div class="note-grid" id="note-grid">
+                            <!-- Notes will be drawn by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Master Effects Panel -->
+            <div class="panel effects-panel" id="effects-panel">
+                <div class="effects-header">
+                    <h2>Master Effects</h2>
+                </div>
+                <div class="effects-chain" id="effects-chain">
+                    <!-- Effects will be populated by JS -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Status Bar -->
+    <div class="status-bar">
+        <div class="status-item">
+            <div class="status-indicator" id="audio-status"></div>
+            <span>Audio: Ready</span>
+        </div>
+        <div class="status-item">
+            <span id="cpu-usage">CPU: 0%</span>
+        </div>
+        <div class="status-item">
+            <span id="memory-usage">Memory: 0 MB</span>
+        </div>
+        <div class="status-item" style="margin-left: auto;">
+            <span id="project-status">Ready</span>
+        </div>
+    </div>
+
+    <script src="timelineUtils.js"></script>
+    <script src="hooks.js"></script>
+    <script src="audio.engine.js"></script>
+    <script src="drumMachine.js"></script>
+    <script src="drumMachineUI.js"></script>
+    <script src="app.js"></script>
+    <script src="plugins.playlist.js"></script>
+    <script src="plugins.automation.js"></script>
+    <script src="channelRackEnhancements.js"></script>
+    <script src="channelSettingsWindow.js"></script>
+    <script src="vocalStudio.js"></script>
+</body>
+</html>

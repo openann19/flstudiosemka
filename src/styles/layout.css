@@ -1,0 +1,233 @@
+/**
+ * Layout Styles - FL Studio layout system
+ * @module styles/layout
+ */
+
+/* App Layout */
+.app {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--fl-bg-darkest);
+  overflow: hidden;
+}
+
+/* Main Content Area */
+.main-content {
+  flex: 1;
+  overflow: hidden;
+  background: var(--fl-bg-darkest);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Channel Rack Panel */
+.channel-rack-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--fl-bg-dark);
+  overflow: auto;
+}
+
+.channel-rack {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* Track Styling */
+.track {
+  display: flex;
+  align-items: stretch;
+  min-height: 40px;
+  border-bottom: 1px solid var(--fl-border-dark);
+  background: var(--fl-bg-dark);
+  transition: background-color 0.05s;
+}
+
+.track:hover {
+  background: var(--fl-bg-hover);
+}
+
+.track.selected {
+  background: var(--fl-bg-medium);
+}
+
+/* Track Header */
+.track-header {
+  width: 180px;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--spacing-small);
+  gap: var(--spacing-small);
+  border-right: 1px solid var(--fl-border-dark);
+  background: linear-gradient(90deg, #272727 0%, #252525 100%);
+  flex-shrink: 0;
+}
+
+/* Track Icon */
+.track-icon {
+  width: 8px;
+  height: 24px;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 0 4px rgba(255, 153, 0, 0.3);
+  flex-shrink: 0;
+}
+
+/* Track Name */
+.track-name {
+  flex: 1;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--fl-text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: text;
+}
+
+.track-name:focus {
+  outline: 2px solid var(--fl-orange);
+  outline-offset: 2px;
+  background: var(--fl-bg-input);
+  padding: 2px 4px;
+  border-radius: var(--radius-sm);
+}
+
+/* Track Controls */
+.track-controls {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* Step Grid */
+.step-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(16, 1fr);
+  gap: 2px;
+  padding: var(--spacing-small);
+  min-width: 0;
+}
+
+/* Transport Panel */
+.transport {
+  height: var(--transport-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--spacing-medium);
+  background: linear-gradient(180deg, #2A2A2A 0%, #232323 100%);
+  border-bottom: 1px solid var(--fl-border-dark);
+}
+
+.transport-controls {
+  display: flex;
+  gap: var(--spacing-small);
+  align-items: center;
+}
+
+.transport-info {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-medium);
+}
+
+.bpm-control {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.bpm-control .label {
+  font-size: '10px';
+  color: var(--fl-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: '0.5px';
+  margin-right: 4px;
+}
+
+.spinner-btn {
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(180deg, #3A3A3A 0%, #2E2E2E 100%);
+  border: 1px solid var(--fl-border);
+  color: var(--fl-text-primary);
+  cursor: pointer;
+  font-size: 12px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.1s;
+  box-shadow: var(--shadow-inset);
+}
+
+.spinner-btn:hover {
+  background: linear-gradient(180deg, var(--fl-bg-hover) 0%, var(--fl-bg-medium) 100%);
+}
+
+.spinner-btn:active {
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+  transform: translateY(1px);
+}
+
+/* Header */
+.header {
+  height: var(--toolbar-height);
+  display: flex;
+  align-items: center;
+  background: linear-gradient(180deg, #2E2E2E 0%, #262626 100%);
+  border-bottom: 1px solid var(--fl-border-dark);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.03);
+  padding: 0 4px;
+  gap: 1px;
+}
+
+.brand {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: var(--fl-orange);
+  padding: 0 10px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  border-right: 1px solid var(--fl-border-dark);
+}
+
+.file-menu {
+  display: flex;
+  height: 100%;
+  align-items: stretch;
+  gap: 0;
+}
+
+.menu-btn {
+  background: transparent;
+  border: none;
+  color: var(--fl-text-primary);
+  padding: 0 12px;
+  font-size: 11px;
+  cursor: pointer;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.1s;
+  position: relative;
+  white-space: nowrap;
+}
+
+.menu-btn:hover {
+  background-color: var(--fl-bg-hover);
+}
+
+.menu-btn:active {
+  background-color: var(--fl-bg-medium);
+}
+

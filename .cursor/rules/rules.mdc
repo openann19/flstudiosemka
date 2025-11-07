@@ -1,0 +1,22 @@
+---
+alwaysApply: true
+---
+Core Principles
+- Enforce strict TypeScript: Explicit types for all functions and variables.
+- Architecture: Use MVC pattern; components in /src/components, services in /src/services.
+
+## Quality Requirements
+All code must:
+- Pass ESLint (airbnb config) and Prettier.
+- Include comprehensive error handling (try-catch with custom errors).
+- Be testable: Add JSDoc comments for functions.
+
+## Testing
+- Unit: Jest with 80% coverage.
+- Integration: Supertest for APIs.
+- Mock external services (e.g., AWS with jest.mock).
+
+## React-Specific
+- Hooks over classes.
+- Accessibility: Semantic elements, keyboard nav, ARIA labels.
+- Performance: React.lazy and Suspense for routes.

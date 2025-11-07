@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>DrumMachine Ultra Compact</title>
+<style>
+  :root{
+    --bg:#0b0f14; --panel:#0f1520; --card:#0b1320; --text:#eaf2ff; --muted:#93a4c4;
+    --accent:#4cc9f0; --accent2:#a78bfa; --ok:#39d353; --warn:#ffb020; --err:#ff5d5d;
+    --grid:#1a2333; --step:#182033; --stepOn:#2a3857; --stepCur:#3a4c76;
+    --glow:0 0 24px rgba(76,201,240,.35), inset 0 0 32px rgba(76,201,240,.06);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;background:linear-gradient(180deg,#0a0e14,#0b0f14);color:var(--text);font:14px/1.4 ui-sans-serif,system-ui,Segoe UI,Roboto,Arial;}
+  .main-content{padding:12px}
+  .panel{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);border-radius:14px;box-shadow:0 10px 40px rgba(0,0,0,.4),inset 0 0 0 1px rgba(255,255,255,.02);backdrop-filter:blur(10px)}
+  .drum-machine-panel{max-width:920px;margin:12px auto;padding:12px}
+  .drum-machine-panel.ultra{box-shadow:0 10px 60px rgba(76,201,240,.2), inset 0 0 0 1px rgba(76,201,240,.14)}
+  .drum-machine-header{display:flex;align-items:center;justify-content:space-between;padding:6px 10px}
+  .drum-machine-title h2{margin:0;font-size:16px;letter-spacing:.4px}
+  .drum-machine-status{margin-left:8px;padding:2px 8px;border-radius:999px;background:#0e1726;border:1px solid rgba(255,255,255,.08);color:var(--muted)}
+  .drum-machine-status.pulse{box-shadow:0 0 0 8px rgba(76,201,240,.08);transition:box-shadow .6s ease-out}
+  .drum-machine-controls{display:flex;gap:10px;align-items:center}
+  .kit-selector, .master-controls, .swing, .prob{display:flex;gap:6px;align-items:center;background:var(--card);padding:6px 8px;border-radius:10px;border:1px solid rgba(255,255,255,.08)}
+  select,input[type=range]{accent-color:var(--accent)}
+  .switch{position:relative;width:44px;height:22px;border-radius:999px;background:#0a1220;border:1px solid rgba(255,255,255,.1);cursor:pointer}
+  .switch i{position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:linear-gradient(180deg,#fff,#cfe8ff);box-shadow:0 2px 8px rgba(0,0,0,.4);transition:transform .2s ease}
+  .switch[data-on="1"] i{transform:translateX(22px)}
+  .switch[data-on="1"]{box-shadow:var(--glow);background:linear-gradient(180deg,#0b1c2e,#0a1320)}
+  .drum-machine-content{display:grid;grid-template-columns:260px 1fr;gap:12px;padding:8px}
+  .drum-pad-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  .drum-pad{--c:var(--accent2);background:linear-gradient(180deg,#0b1423,#0a111d);border:1px solid rgba(255,255,255,.06);border-radius:14px;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+  .drum-pad-inner{padding:10px 12px}
+  .drum-name{font-weight:600}
+  .drum-key{color:var(--muted);font-size:11px}
+  .drum-pad.active{outline:0;box-shadow:0 0 0 2px var(--c), var(--glow);transform:translateY(-1px);transition:.08s}
+  .drum-visualizer{height:8px;margin-top:8px;background:#0a121f;border-radius:6px;overflow:hidden;border:1px solid rgba(255,255,255,.06)}
+  .drum-waveform{height:100%;transform:scaleX(0);transform-origin:left;transition:transform .15s ease;background:linear-gradient(90deg,var(--c),rgba(76,201,240,.6))}
+  .drum-pad.active .drum-waveform{transform:scaleX(1)}
+  .drum-sequencer{background:linear-gradient(180deg,#0b1322,#0b111c);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:10px}
+  .sequencer-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+  .sequencer-controls{display:flex;gap:8px}
+  .sequencer-btn{background:#0f1a2a;border:1px solid rgba(255,255,255,.1);color:var(--text);padding:6px 10px;border-radius:10px;cursor:pointer}
+  .sequencer-btn:hover{box-shadow:0 0 0 2px rgba(76,201,240,.25)}
+  .sequencer-grid{display:grid;grid-template-columns:24px repeat(16,1fr);gap:6px}
+  .sequencer-labels{grid-column:1/-1;display:grid;grid-template-columns:24px repeat(16,1fr);gap:6px}
+  .step-label{font-size:10px;color:var(--muted);text-align:center}
+  .sequencer-row{display:contents}
+  .drum-label{height:28px;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--muted);user-select:none}
+  .sequencer-step{height:28px;border-radius:8px;background:var(--step);border:1px solid rgba(255,255,255,.06);position:relative;cursor:pointer}
+  .sequencer-step[data-bar="1"]{outline:1px dashed rgba(255,255,255,.06)}
+  .sequencer-step.active{background:var(--stepOn);border-color:rgba(76,201,240,.45);box-shadow:inset 0 0 24px rgba(76,201,240,.12)}
+  .sequencer-step.current{box-shadow:0 0 0 2px var(--accent), inset 0 0 0 1px rgba(255,255,255,.08)}
+  .sequencer-step::after{content:attr(data-v);position:absolute;right:4px;bottom:1px;font-size:9px;color:rgba(255,255,255,.45)}
+  .v50.active{filter:saturate(1.1) brightness(1)}
+  .v100.active{filter:saturate(1.3) brightness(1.06)}
+  .muted{opacity:.45}
+  @media (max-width:840px){.drum-machine-content{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="main-content"></div>
+
+<script type="module">
+/* ========= Ultra Compact Drum Machine (Self-contained) ========= */
+class SafeFL {
+  constructor(){ this.bpm=120; this.audioContext=null; }
+  async initAudio(){ if(!this.audioContext){ this.audioContext=new (window.AudioContext||window.webkitAudioContext)({latencyHint:"interactive"}); await this.audioContext.resume(); } }
+  addTrack(){ /* optional integration hook */ }
+}
+
+/* -------- Audio Utils -------- */
+const A = {
+  env(ctx, time, dur, out, {a=0.001,d=0.08,s=0.0,r=0.12,peak=1}={}) {
+    const now=time; const g=ctx.createGain(); g.gain.setValueAtTime(0, now);
+    g.gain.linearRampToValueAtTime(peak, now+a);
+    g.gain.linearRampToValueAtTime(s, now+a+d);
+    g.gain.linearRampToValueAtTime(0.0001, now+a+d+r+dur);
+    out && g.connect(out); return g;
+  },
+  noise(ctx){ const b=ctx.createBuffer(1, ctx.sampleRate, ctx.sampleRate); const d=b.getChannelData(0); for(let i=0;i<d.length;i++){ d[i]=Math.random()*2-1; } const s=ctx.createBufferSource(); s.buffer=b; s.loop=true; return s; },
+  biquad(ctx,type,f,q=0.707, g=1){ const f1=ctx.createBiquadFilter(); f1.type=type; f1.frequency.value=f; f1.Q.value=q; const gain=ctx.createGain(); gain.gain.value=g; f1.connect(gain); return {in:f1, out:gain}; }
+};
+
+/* -------- Drum Synth Kit (no external samples) -------- */
+class DrumMachine {
+  constructor(ctx){
+    this.ctx=ctx;
+    this.master=ctx.createGain(); this.master.gain.value=0.8; this.master.connect(ctx.destination);
+    this.isLoaded=true;
+    this.kit='Studio HD';
+  }
+  setMasterVolume(v){ this.master.gain.value = Math.max(0, Math.min(1, v)); }
+  setKit(k){ this.kit = k; } // parameterize flavors below if desired
+  playDrum(type, vel=1){
+    const t=this.ctx.currentTime + 0.002; // slight safety offset
+    const o=this.ctx.createGain(); o.gain.value=1; o.connect(this.master);
+    const V = Math.max(0.05, Math.min(1, vel));
+    switch(type){
+      case 'kick': {
+        const osc=this.ctx.createOscillator(); osc.type='sine';
+        osc.frequency.setValueAtTime(150, t);
+        osc.frequency.exponentialRampToValueAtTime(48, t+0.18);
+        const env=A.env(this.ctx,t,0.18,null,{a:0.001,d:0.08,r:0.08,peak:2*V});
+        osc.connect(env).connect(o); osc.start(t); osc.stop(t+0.25); break;
+      }
+      case 'snare': {
+        const n=A.noise(this.ctx);
+        const bp=A.biquad(this.ctx,'bandpass',1800,0.7,1.2);
+        const hp=A.biquad(this.ctx,'highpass',600,0.7,1);
+        const env=A.env(this.ctx,t,0.15,null,{a:0.001,d:0.10,r:0.06,peak:1.6*V});
+        n.connect(bp.in); bp.out.connect(hp.in); hp.out.connect(env).connect(o);
+        n.start(t); n.stop(t+0.2);
+        break;
+      }
+      case 'hihat': {
+        const n=A.noise(this.ctx);
+        const hp=A.biquad(this.ctx,'highpass',7000,0.8,1.2);
+        const env=A.env(this.ctx,t,0.06,null,{a:0.001,d:0.03,r:0.03,peak:1.1*V});
+        n.connect(hp.in); hp.out.connect(env).connect(o);
+        n.start(t); n.stop(t+0.1);
+        break;
+      }
+      case 'clap': {
+        const n=A.noise(this.ctx);
+        const bp=A.biquad(this.ctx,'bandpass',1800,0.9,1.1);
+        const env=A.env(this.ctx,t,0.18,null,{a:0.001,d:0.06,r:0.12,peak:1.8*V});
+        n.connect(bp.in); bp.out.connect(env).connect(o);
+        n.start(t); n.stop(t+0.25);
+        break;
+      }
+      case 'tom': {
+        const osc=this.ctx.createOscillator(); osc.type='sine';
+        osc.frequency.setValueAtTime(210, t);
+        osc.frequency.exponentialRampToValueAtTime(110, t+0.22);
+        const env=A.env(this.ctx,t,0.22,null,{a:0.001,d:0.12,r:0.1,peak:1.8*V});
+        osc.connect(env).connect(o); osc.start(t); osc.stop(t+0.28); break;
+      }
+      case 'crash': {
+        const n=A.noise(this.ctx);
+        const hp=A.biquad(this.ctx,'highpass',5000,0.6,1.1);
+        const env=A.env(this.ctx,t,0.9,null,{a:0.002,d:0.45,r:0.35,peak:1.2*V});
+        n.connect(hp.in); hp.out.connect(env).connect(o); n.start(t); n.stop(t+1.0); break;
+      }
+      case 'ride': {
+        const n=A.noise(this.ctx);
+        const hp=A.biquad(this.ctx,'highpass',4500,0.8,1.08);
+        const env=A.env(this.ctx,t,0.6,null,{a:0.002,d:0.30,r:0.3,peak:1.0*V});
+        n.connect(hp.in); hp.out.connect(env).connect(o); n.start(t); n.stop(t+0.8); break;
+      }
+      default: { // perc
+        const osc=this.ctx.createOscillator(); osc.type='triangle';
+        osc.frequency.setValueAtTime(520, t);
+        osc.frequency.exponentialRampToValueAtTime(320, t+0.08);
+        const env=A.env(this.ctx,t,0.1,null,{a:0.001,d:0.05,r:0.05,peak:1.4*V});
+        osc.connect(env).connect(o); osc.start(t); osc.stop(t+0.14); break;
+      }
+    }
+  }
+}
+
+/* -------- High-precision Scheduler (audio-time based) -------- */
+class DrumScheduler {
+  constructor({ctx, getBpm, onStep, steps=16, swing=0}){
+    this.ctx=ctx; this.getBpm=getBpm; this.onStep=onStep; this.steps=steps; this.swing=swing;
+    this.lookahead=0.025; // seconds
+    this.scheduleAhead=0.1; // seconds
+    this.isRunning=false; this.nextStepTime=0; this.currentStep=0; this._timer=null;
+  }
+  _stepDuration(){ // 16th notes, seconds per step = 60/BPM/4
+    const bpm = Math.max(20, Math.min(300, this.getBpm()));
+    const base = 60 / bpm / 4;
+    // Swing: offset odd steps by +/- swing*base
+    const odd = (this.currentStep % 2) === 1;
+    return odd ? base*(1+this.swing) : base*(1-this.swing);
+  }
+  start(){
+    if(this.isRunning) return;
+    const t=this.ctx.currentTime + 0.05;
+    this.isRunning=true; this.currentStep=0; this.nextStepTime=t;
+    const tick = () => {
+      if(!this.isRunning) return;
+      while(this.nextStepTime < this.ctx.currentTime + this.scheduleAhead){
+        this.onStep(this.currentStep, this.nextStepTime);
+        this.nextStepTime += this._stepDuration();
+        this.currentStep = (this.currentStep + 1) % this.steps;
+      }
+      this._timer = setTimeout(tick, this.lookahead*1000);
+    };
+    tick();
+  }
+  stop(){
+    this.isRunning=false;
+    if(this._timer){ clearTimeout(this._timer); this._timer=null; }
+  }
+}
+
+/* -------- Ultra Compact UI -------- */
+class DrumMachineUIUltra {
+  constructor(flStudio){
+    this.flStudio = flStudio || new SafeFL();
+    this.drumMachine=null; this.isVisible=false; this.isPlaying=false;
+    this.currentKit='Studio HD'; this.currentStep=0; this.scheduler=null;
+    this.swing=0.08; // 0..0.5 reasonable
+    this.defaultProb=1.0; // global prob multiplier
+    this.pattern=this._newPattern(); // value: 0(off) | 0.5 | 1 (velocity); with probability per cell
+    this.cellProb=this._newPattern(1.0); // probability grid 0..1
+    this.kitPresets={
+      'Studio HD': { color:'#FF9900', description:'Professional studio quality drums' },
+      'Electronic Pro': { color:'#4A90E2', description:'Modern electronic drum sounds' },
+      'Acoustic Premium': { color:'#3FB53F', description:'Realistic acoustic drum kit' },
+      '808 Vintage': { color:'#BB8FCE', description:'Classic 808 drum machine sounds' }
+    };
+    this._mount();
+  }
+
+  _newPattern(fill=0){
+    const drums=['kick','snare','hihat','clap','tom','crash','ride','perc'];
+    const p={}; for(const d of drums) p[d]=Array(16).fill(fill);
+    return p;
+  }
+
+  async _mount(){
+    await this._createUI();
+    this._wire();
+    this._loadPersisted();
+    this.updateStatus('Ready');
+  }
+
+  async _createUI(){
+    const host = document.querySelector('.main-content') || document.body;
+    const panel = document.createElement('div');
+    panel.className='panel drum-machine-panel';
+    panel.id='drum-machine-panel';
+    panel.style.display='none';
+    panel.innerHTML=this._html();
+    host.appendChild(panel);
+    await this._initAudio();
+  }
+
+  _html(){
+    const padHTML = (() => {
+      const drums=[
+        {type:'kick', name:'Kick',  color:'#FF6B6B', key:'Q'},
+        {type:'snare',name:'Snare', color:'#4A90E2', key:'W'},
+        {type:'hihat',name:'Hi-Hat',color:'#F5A623', key:'E'},
+        {type:'clap', name:'Clap',  color:'#BB8FCE', key:'R'},
+        {type:'tom',  name:'Tom',   color:'#48C9B0', key:'A'},
+        {type:'crash',name:'Crash', color:'#E84C3D', key:'S'},
+        {type:'ride', name:'Ride',  color:'#3498DB', key:'D'},
+        {type:'perc', name:'Perc',  color:'#F39C12', key:'F'},
+      ];
+      return drums.map(d=>`
+        <div class="drum-pad" data-drum="${d.type}" style="--c:${d.color}">
+          <div class="drum-pad-inner">
+            <div class="drum-name">${d.name}</div>
+            <div class="drum-key">${d.key}</div>
+            <div class="drum-visualizer"><div class="drum-waveform"></div></div>
+          </div>
+        </div>
+      `).join('');
+    })();
+
+    const seqLabels = Array.from({length:16},(_,i)=>`<div class="step-label">${i+1}</div>`).join('');
+    const rows = ['kick','snare','hihat','clap','tom','crash','ride','perc']
+      .map(d=>{
+        const steps = Array.from({length:16},(_,i)=>{
+          const bar = (i%4===0)?1:0;
+          return `<div class="sequencer-step" data-step="${i}" data-drum="${d}" data-bar="${bar}" data-v=""></div>`;
+        }).join('');
+        return `<div class="sequencer-row" data-row="${d}">
+          <div class="drum-label">${d[0].toUpperCase()}</div>
+          ${steps}
+        </div>`;
+      }).join('');
+
+    return `
+      <div class="drum-machine-header">
+        <div class="drum-machine-title">
+          <h2>Drum Machine</h2>
+          <span class="drum-machine-status" id="drum-machine-status">Booting…</span>
+        </div>
+        <div class="drum-machine-controls">
+          <div class="kit-selector"><label>Kit</label>
+            <select id="kit-select">
+              <option>Studio HD</option><option>Electronic Pro</option><option>Acoustic Premium</option><option>808 Vintage</option>
+            </select>
+          </div>
+          <div class="master-controls"><label>Vol</label>
+            <input type="range" id="master-volume" min="0" max="100" value="80">
+          </div>
+          <div class="swing"><label>Swing</label>
+            <input type="range" id="swing" min="0" max="30" value="8">
+          </div>
+          <div class="prob"><label>Prob</label>
+            <input type="range" id="global-prob" min="0" max="100" value="100" title="Global probability multiplier">
+          </div>
+          <div class="switch" id="ultra" data-on="1" title="Ultra Mode"><i></i></div>
+          <button class="sequencer-btn" id="seq-play">▶ Play</button>
+          <button class="sequencer-btn" id="seq-stop">■ Stop</button>
+        </div>
+      </div>
+
+      <div class="drum-machine-content">
+        <div class="drum-pad-grid" id="drum-pad-grid">${padHTML}</div>
+        <div class="drum-sequencer">
+          <div class="sequencer-header">
+            <h3>Pattern</h3>
+            <div class="sequencer-controls">
+              <button class="sequencer-btn" id="seq-clear">Clear</button>
+              <button class="sequencer-btn" id="seq-save">Save</button>
+              <button class="sequencer-btn" id="seq-export">Export JSON</button>
+            </div>
+          </div>
+          <div class="sequencer-grid" id="sequencer-grid">
+            <div class="sequencer-labels"><div></div>${seqLabels}</div>
+            ${rows}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  async _initAudio(){
+    if(!this.flStudio.audioContext) await this.flStudio.initAudio();
+    if(this.flStudio.audioContext && !this.drumMachine){
+      this.drumMachine = new DrumMachine(this.flStudio.audioContext);
+      this.updateStatus('Drum Engine Ready');
+    } else if(!this.flStudio.audioContext){
+      this.updateStatus('Audio blocked'); console.warn('User gesture required to start audio.');
+    }
+  }
+
+  _wire(){
+    const panel = document.getElementById('drum-machine-panel');
+    panel.addEventListener('click', (e)=>{
+      const pad=e.target.closest('.drum-pad');
+      if(pad){ const d=pad.dataset.drum; this.playDrum(d,1.0); this._flashPad(pad); }
+      const step=e.target.closest('.sequencer-step');
+      if(step){ this._toggleStep(step, e); }
+      if(e.target.id==='seq-play') this.toggleSequencer();
+      if(e.target.id==='seq-stop') this.stopSequencer();
+      if(e.target.id==='seq-clear') this.clearSequencer();
+      if(e.target.id==='seq-save') this._persist();
+      if(e.target.id==='seq-export') this._exportJSON();
+      if(e.target.id==='ultra'){ const on=(e.target.dataset.on==='1')?0:1; e.target.dataset.on=String(on); panel.classList.toggle('ultra', !!on); }
+    });
+    panel.addEventListener('contextmenu',(e)=>{
+      const step=e.target.closest('.sequencer-step');
+      if(step){ e.preventDefault(); this._cycleProb(step); }
+    });
+    document.getElementById('kit-select').addEventListener('change', e=>{
+      this.setKit(e.target.value);
+    });
+    document.getElementById('master-volume').addEventListener('input', e=>{
+      this.setMasterVolume(e.target.value/100);
+    });
+    document.getElementById('swing').addEventListener('input', e=>{
+      const v = Number(e.target.value); this.swing = Math.max(0, Math.min(0.3, v/100)); if(this.scheduler) this.scheduler.swing=this.swing;
+    });
+    document.getElementById('global-prob').addEventListener('input', e=>{
+      const v=Number(e.target.value); this.defaultProb=Math.max(0, Math.min(1, v/100));
+    });
+    // Keyboard
+    window.addEventListener('keydown', (e)=>{
+      if(!this.isVisible) return;
+      const k = e.key.toUpperCase();
+      const map={Q:'kick',W:'snare',E:'hihat',R:'clap',A:'tom',S:'crash',D:'ride',F:'perc'};
+      if(map[k]){ e.preventDefault(); this.playDrum(map[k],1.0); this._flashPad(document.querySelector(`.drum-pad[data-drum="${map[k]}"]`)); }
+      if(e.code==='Space'){ e.preventDefault(); this.toggleSequencer(); }
+    }, {passive:false});
+  }
+
+  _toggleStep(stepEl, e){
+    const drum=stepEl.dataset.drum; const idx=Number(stepEl.dataset.step);
+    // Left click cycles velocity 0 -> 0.5 -> 1 -> 0
+    const cur = this.pattern[drum][idx];
+    const next = cur===0 ? 0.5 : (cur===0.5 ? 1 : 0);
+    this.pattern[drum][idx]=next;
+    stepEl.classList.toggle('active', next>0);
+    stepEl.classList.toggle('v50', next===0.5);
+    stepEl.classList.toggle('v100', next===1);
+    stepEl.dataset.v = next>0 ? (next===1?'100':'50') : '';
+    this._persistDebounced();
+  }
+
+  _cycleProb(stepEl){
+    const drum=stepEl.dataset.drum; const idx=Number(stepEl.dataset.step);
+    const cur = this.cellProb[drum][idx]; // 1.0 -> 0.7 -> 0.4 -> 0.1 -> 1.0
+    const seq=[1.0,0.7,0.4,0.1]; const ni=(seq.indexOf(cur)+1)%seq.length; const next=seq[ni];
+    this.cellProb[drum][idx]=next;
+    stepEl.title=`Probability: ${Math.round(next*100)}%`;
+    stepEl.style.opacity = (this.pattern[drum][idx]>0) ? (0.7 + 0.3*next) : 1;
+    this._persistDebounced();
+  }
+
+  _flashPad(pad){ if(!pad) return; pad.classList.add('active'); const wf=pad.querySelector('.drum-waveform'); if(wf){ wf.style.transform='scaleX(1)'; setTimeout(()=>{ wf.style.transform='scaleX(0)';},120);} setTimeout(()=>pad.classList.remove('active'),120); }
+
+  async playDrum(drumType, velocity=1.0){
+    if(!this.drumMachine) await this._initAudio();
+    if(this.drumMachine && this.drumMachine.isLoaded){
+      this.drumMachine.playDrum(drumType, velocity);
+      this.updateStatus(`Playing: ${drumType}`);
+    } else { this.updateStatus('Engine not ready'); }
+  }
+
+  setKit(name){ this.currentKit=name; if(this.drumMachine) this.drumMachine.setKit(name); this.updateStatus(`Kit: ${name}`); this._persistDebounced(); }
+  setMasterVolume(v){ if(this.drumMachine) this.drumMachine.setMasterVolume(v); this._persistDebounced(); }
+
+  updateStatus(msg){
+    const el=document.getElementById('drum-machine-status'); if(!el) return;
+    el.textContent=msg; el.classList.add('pulse'); setTimeout(()=>el.classList.remove('pulse'),500);
+  }
+
+  toggleSequencer(){ if(this.isPlaying) this.stopSequencer(); else this.startSequencer(); }
+  startSequencer(){
+    if(this.isPlaying) return;
+    this.isPlaying=true; document.getElementById('seq-play').textContent='❚❚ Pause';
+    const ctx=this.flStudio.audioContext; const getBpm=()=> this.flStudio?.bpm ?? 120;
+    this.scheduler=new DrumScheduler({
+      ctx, getBpm, onStep:(s, at)=>this._onScheduledStep(s, at), steps:16, swing:this.swing
+    });
+    this.scheduler.start(); this.updateStatus('Sequencer playing');
+  }
+  stopSequencer(){
+    this.isPlaying=false; document.getElementById('seq-play').textContent='▶ Play';
+    if(this.scheduler){ this.scheduler.stop(); this.scheduler=null; }
+    this._updateStepIndicator(-1); this.updateStatus('Sequencer stopped');
+  }
+
+  _onScheduledStep(stepIdx, at){
+    this.currentStep=stepIdx; this._updateStepIndicator(stepIdx);
+    for(const drum of Object.keys(this.pattern)){
+      const vel=this.pattern[drum][stepIdx];
+      if(vel>0){
+        const p = this.cellProb[drum][stepIdx]*this.defaultProb;
+        if(Math.random() <= p){ // probabilistic trigger
+          // Slight humanize in Ultra mode
+          const ultraOn = document.getElementById('ultra')?.dataset.on==='1';
+          const nudge = ultraOn ? (Math.random()-0.5)*0.004 : 0; // ±4ms
+          const v = vel;
+          // schedule by calling engine close to 'at' time
+          const delay = Math.max(0, (at + nudge) - this.flStudio.audioContext.currentTime);
+          setTimeout(()=>this.drumMachine.playDrum(drum, v), delay*1000);
+        }
+      }
+    }
+  }
+
+  _updateStepIndicator(idx){
+    document.querySelectorAll('.sequencer-step.current').forEach(el=>el.classList.remove('current'));
+    if(idx>=0){ document.querySelectorAll(`.sequencer-step[data-step="${idx}"]`).forEach(el=>el.classList.add('current')); }
+  }
+
+  clearSequencer(){
+    this.pattern=this._newPattern(0); this.cellProb=this._newPattern(1.0);
+    document.querySelectorAll('.sequencer-step').forEach(s=>{ s.classList.remove('active','v50','v100'); s.dataset.v=''; s.title=''; s.style.opacity='1'; });
+    this.updateStatus('Cleared'); this._persistDebounced();
+  }
+
+  _persist(){
+    try{
+      const data={
+        pattern:this.pattern, cellProb:this.cellProb,
+        kit:this.currentKit, master: this.drumMachine? this.drumMachine.master.gain.value : 0.8,
+        swing:this.swing, prob:this.defaultProb
+      };
+      localStorage.setItem('dm_ultra', JSON.stringify(data));
+      this.updateStatus('Saved');
+    }catch(err){ console.warn('persist failed', err); }
+  }
+  _persistDebounced(){ clearTimeout(this._pd||0); this._pd=setTimeout(()=>this._persist(), 250); }
+
+  _loadPersisted(){
+    try{
+      const raw=localStorage.getItem('dm_ultra'); if(!raw) return;
+      const d=JSON.parse(raw);
+      if(d.pattern) this.pattern=d.pattern;
+      if(d.cellProb) this.cellProb=d.cellProb;
+      if(d.kit) { this.currentKit=d.kit; const sl=document.getElementById('kit-select'); if(sl) sl.value=d.kit; }
+      if(typeof d.master==='number') this.setMasterVolume(d.master);
+      if(typeof d.swing==='number'){ this.swing=d.swing; const r=document.getElementById('swing'); if(r) r.value=String(Math.round(this.swing*100)); }
+      if(typeof d.prob==='number'){ this.defaultProb=d.prob; const r=document.getElementById('global-prob'); if(r) r.value=String(Math.round(this.defaultProb*100)); }
+      // reflect pattern into grid
+      for(const drum of Object.keys(this.pattern)){
+        this.pattern[drum].forEach((v,i)=>{
+          const el=document.querySelector(`.sequencer-step[data-drum="${drum}"][data-step="${i}"]`);
+          if(!el) return;
+          if(v>0){ el.classList.add('active'); el.classList.toggle('v50', v===0.5); el.classList.toggle('v100', v===1); el.dataset.v=v===1?'100':'50'; }
+          const pr=this.cellProb[drum][i]; el.title = `Probability: ${Math.round(pr*100)}%`; if(v>0) el.style.opacity=0.7+0.3*pr;
+        });
+      }
+    }catch(err){ console.warn('load failed', err); }
+  }
+
+  _exportJSON(){
+    const blob=new Blob([JSON.stringify({pattern:this.pattern, cellProb:this.cellProb}, null, 2)], {type:'application/json'});
+    const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='drum_pattern.json'; a.click(); URL.revokeObjectURL(url);
+  }
+
+  show(){
+    this.isVisible=true;
+    const panel=document.getElementById('drum-machine-panel'); if(panel){ panel.style.display='block'; panel.classList.add('ultra'); }
+    this._initAudio();
+  }
+  hide(){
+    this.isVisible=false; this.stopSequencer();
+    const panel=document.getElementById('drum-machine-panel'); if(panel){ panel.style.display='none'; }
+  }
+}
+
+/* -------- Public export for integration -------- */
+window.DrumMachineUIUltra = DrumMachineUIUltra;
+
+/* -------- Minimal self-test (runs once, logs to console) -------- */
+(function runTests(){
+  const assert=(cond,msg)=>{ if(!cond) throw new Error('Test failed: '+msg); };
+  const fl=new SafeFL(); const ui=new DrumMachineUIUltra(fl);
+  ui.show();
+  setTimeout(async ()=>{
+    await fl.initAudio();
+    assert(ui.pattern.kick.length===16,'pattern length');
+    ui._toggleStep(document.querySelector('.sequencer-step[data-drum="kick"][data-step="0"]'), {button:0});
+    assert(ui.pattern.kick[0]>0,'toggle step on');
+    ui.setMasterVolume(0.5); assert(Math.abs(ui.drumMachine.master.gain.value-0.5)<1e-6,'master vol set');
+    ui.startSequencer(); setTimeout(()=>{ ui.stopSequencer(); console.log('%cDrumMachine Ultra: self-tests OK','color:#39d353'); }, 400);
+  }, 100);
+})();
+</script>
+</body>
+</html>
