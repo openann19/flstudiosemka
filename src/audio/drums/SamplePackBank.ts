@@ -82,7 +82,7 @@ export class SamplePackBank {
             buffer: audioBuffer,
           });
         } catch (error) {
-          // eslint-disable-next-line no-console
+           
           console.error(`[DEBUG] SamplePackBank: Failed to load sample ${sampleData.metadata.name}`, error);
         }
       });
@@ -90,7 +90,7 @@ export class SamplePackBank {
       await Promise.all(loadPromises);
       this.initialized = true;
     } catch (error) {
-      // eslint-disable-next-line no-console
+       
       console.error('[DEBUG] SamplePackBank: Failed to initialize', error);
       throw new Error(`SamplePackBank: Failed to initialize - ${error}`);
     }

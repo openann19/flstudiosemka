@@ -5,7 +5,6 @@
 
 import { renderHook, act } from '@testing-library/react';
 import { useKeyboardShortcuts } from '../../src/hooks/useKeyboardShortcuts';
-import type { ShortcutCombination } from '../../src/types/shortcuts';
 
 describe('useKeyboardShortcuts', () => {
   beforeEach(() => {

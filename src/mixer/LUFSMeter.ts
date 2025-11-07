@@ -7,8 +7,6 @@
 
 import {
   AudioContextError,
-  InvalidParameterError,
-  ValidationUtils,
 } from '../utils/errors';
 
 /**

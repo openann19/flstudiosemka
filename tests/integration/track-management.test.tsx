@@ -6,7 +6,6 @@
 import { renderHook, act } from '@testing-library/react';
 import { useTracks } from '../../src/hooks/useTracks';
 import { usePatterns } from '../../src/hooks/usePatterns';
-import { createTrack } from '../factories/track-factory';
 
 describe('Track Management Workflow', () => {
   it('should add track and verify it exists', () => {

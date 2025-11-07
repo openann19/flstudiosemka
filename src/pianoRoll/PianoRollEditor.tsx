@@ -41,7 +41,7 @@ export class PianoRollEditor {
   private canvas: HTMLCanvasElement;
   private ctx: CanvasRenderingContext2D;
   // AudioContext stored for future use (e.g., audio playback)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+   
   private _audioContext: AudioContext;
   private notes: PianoRollNote[];
   private selectedNotes: Set<PianoRollNote>;

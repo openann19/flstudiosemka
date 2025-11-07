@@ -248,7 +248,7 @@ export function BrowserWindow({
             });
           }
         } catch (error) {
-          // eslint-disable-next-line no-console
+           
           console.error('[DEBUG] BrowserWindow: Failed to preview sample', error);
         }
       }

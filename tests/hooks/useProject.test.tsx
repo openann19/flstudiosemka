@@ -3,7 +3,7 @@
  * @module tests/hooks/useProject
  */
 
-import { renderHook, act, waitFor } from '@testing-library/react';
+import { renderHook, act } from '@testing-library/react';
 import { useProject } from '../../src/hooks/useProject';
 import { createTrack } from '../factories/track-factory';
 import { createProject } from '../factories/project-factory';

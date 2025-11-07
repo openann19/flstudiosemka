@@ -30,7 +30,7 @@ describe('EQ', () => {
 
     it('should throw error with invalid AudioContext', () => {
       expect(() => {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+         
         new EQ(null as any);
       }).toThrow();
     });
@@ -196,7 +196,7 @@ describe('EQ', () => {
 
     it('should throw error with invalid processing mode', () => {
       expect(() => {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+         
         eq.setProcessingMode('invalid' as any);
       }).toThrow();
     });

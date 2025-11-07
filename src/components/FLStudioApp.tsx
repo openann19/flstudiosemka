@@ -89,7 +89,7 @@ export function FLStudioApp(): JSX.Element {
   const patterns = usePatterns({ defaultSteps: 16 });
 
   // Undo/Redo (ready for future use)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+   
   const _undoRedo = useUndoRedo(100);
   void _undoRedo; // Mark as intentionally unused
 
@@ -99,10 +99,10 @@ export function FLStudioApp(): JSX.Element {
   const tools = useTools();
   const hintPanel = useHintPanel();
   // Context menu and mouse interactions are available for use in components
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+   
   const contextMenu = useContextMenu();
   void contextMenu; // Mark as intentionally unused
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+   
   const mouseInteractions = useMouseInteractions({ enabled: true });
   void mouseInteractions; // Mark as intentionally unused
   

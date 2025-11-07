@@ -5,7 +5,8 @@
  */
 
 import { useState, useEffect, useCallback } from 'react';
-import { toolManagerService, ToolManagerService } from '../services/ToolManagerService';
+import type { ToolManagerService } from '../services/ToolManagerService';
+import { toolManagerService } from '../services/ToolManagerService';
 import type { ToolType } from '../types/FLStudio.types';
 
 /**

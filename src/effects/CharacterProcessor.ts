@@ -31,7 +31,7 @@ export interface CharacterConfig {
  */
 export class CharacterProcessor {
   // AudioContext stored for future use (e.g., creating additional nodes)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+   
   private _audioContext: AudioContext;
 
   private waveshaper: WaveShaperNode;

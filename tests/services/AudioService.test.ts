@@ -4,7 +4,7 @@
  */
 
 import { AudioService } from '../../src/services/AudioService';
-import { MasterEffects } from '../../src/types/FLStudio.types';
+import type { MasterEffects } from '../../src/types/FLStudio.types';
 import { createMockAudioContext } from '../factories/audio-context-factory';
 
 describe('AudioService', () => {

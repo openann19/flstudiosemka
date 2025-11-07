@@ -4,7 +4,7 @@
  */
 
 import { useState, useEffect } from 'react';
-import { PresetManager } from '../../audio/synthesizer/presets/PresetManager';
+import type { PresetManager } from '../../audio/synthesizer/presets/PresetManager';
 import type { SynthesizerPreset } from '../../types/synthesizer.types';
 
 /**

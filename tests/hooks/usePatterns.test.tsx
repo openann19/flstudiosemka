@@ -5,7 +5,7 @@
 
 import { renderHook, act } from '@testing-library/react';
 import { usePatterns } from '../../src/hooks/usePatterns';
-import { createPattern, createPatterns } from '../factories/pattern-factory';
+import { createPatterns } from '../factories/pattern-factory';
 
 describe('usePatterns', () => {
   describe('initialization', () => {

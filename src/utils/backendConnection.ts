@@ -102,7 +102,7 @@ class BackendConnection {
     try {
       return await response.json() as T;
     } catch (error) {
-      // eslint-disable-next-line no-console
+       
       console.warn('Failed to parse JSON response:', error);
       return null;
     }

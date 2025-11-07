@@ -3,10 +3,9 @@
  * @module tests/hooks/usePlayback
  */
 
-import { renderHook, act, waitFor } from '@testing-library/react';
+import { renderHook, act } from '@testing-library/react';
 import { usePlayback } from '../../src/hooks/usePlayback';
 import { createMockAudioContext } from '../factories/audio-context-factory';
-import { createTracks } from '../factories/track-factory';
 
 describe('usePlayback', () => {
   const mockPlayCurrentStep = jest.fn();

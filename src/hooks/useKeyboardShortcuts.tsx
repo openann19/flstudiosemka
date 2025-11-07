@@ -5,9 +5,10 @@
  */
 
 import { useEffect, useCallback, useRef } from 'react';
+import type {
+  KeyboardShortcutService} from '../services/KeyboardShortcutService';
 import {
-  keyboardShortcutService,
-  KeyboardShortcutService,
+  keyboardShortcutService
 } from '../services/KeyboardShortcutService';
 import type {
   ShortcutCombination,

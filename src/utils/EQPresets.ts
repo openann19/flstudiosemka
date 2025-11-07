@@ -4,7 +4,7 @@
  * @module utils/EQPresets
  */
 
-import { EQBandConfig } from '../effects/EQBand';
+import type { EQBandConfig } from '../effects/EQBand';
 import { FilterType } from '../effects/EQBand';
 
 /**

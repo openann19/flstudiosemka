@@ -3,7 +3,7 @@
  * @module tests/hooks/useWindowManager
  */
 
-import { renderHook, act, waitFor } from '@testing-library/react';
+import { renderHook, act } from '@testing-library/react';
 import { useWindowManager } from '../../src/hooks/useWindowManager';
 
 describe('useWindowManager', () => {

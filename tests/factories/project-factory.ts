@@ -6,7 +6,6 @@
 
 import type { ProjectData, Track, Arrangement } from '../../src/types/FLStudio.types';
 import { createTrack, type TrackFactoryOptions } from './track-factory';
-import { createPattern, type PatternFactoryOptions } from './pattern-factory';
 
 /**
  * Project factory options

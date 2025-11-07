@@ -3,7 +3,7 @@
  * Strict TypeScript implementation with comprehensive error handling
  */
 
-import type { SoundLibrary, SoundItem, TrackType } from '../types/FLStudio.types';
+import type { SoundLibrary, SoundItem } from '../types/FLStudio.types';
 import type { SamplePackBank } from '../audio/drums/SamplePackBank';
 
 export class BrowserService {

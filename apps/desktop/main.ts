@@ -208,7 +208,7 @@ app.on('window-all-closed', () => {
 app.on('web-contents-created', (_event, contents) => {
   contents.on('new-window', (event, navigationUrl) => {
     event.preventDefault();
-    // eslint-disable-next-line no-console
+     
     console.warn('Blocked new window:', navigationUrl);
   });
 });
@@ -220,7 +220,7 @@ app.on('web-contents-created', (_event, contents) => {
     
     if (parsedUrl.origin !== 'file://' && !parsedUrl.origin.startsWith('http://localhost')) {
       event.preventDefault();
-      // eslint-disable-next-line no-console
+       
       console.warn('Blocked navigation to:', navigationUrl);
     }
   });
@@ -228,13 +228,13 @@ app.on('web-contents-created', (_event, contents) => {
 
 // Handle uncaught exceptions
 process.on('uncaughtException', (error) => {
-  // eslint-disable-next-line no-console
+   
   console.error('Uncaught Exception:', error);
   // In production, log to file and show user-friendly error
 });
 
 process.on('unhandledRejection', (reason, promise) => {
-  // eslint-disable-next-line no-console
+   
   console.error('Unhandled Rejection at:', promise, 'reason:', reason);
 });
 
