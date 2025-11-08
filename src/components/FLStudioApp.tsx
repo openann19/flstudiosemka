@@ -79,8 +79,8 @@ export function FLStudioApp(): JSX.Element {
   const audioServiceRef = useRef<AudioService | null>(null);
   const browserServiceRef = useRef<BrowserService | null>(null);
   const performanceMonitorRef = useRef<number | null>(null);
-  const lastPerformanceUpdateRef = useRef<number>(0);
-  const PERFORMANCE_THROTTLE_MS = 100; // 10fps for performance monitoring (less critical)
+  const _lastPerformanceUpdateRef = useRef<number>(0);
+  const _PERFORMANCE_THROTTLE_MS = 100; // 10fps for performance monitoring (less critical)
 
   // Initialize drum kits
   const drumKits = useDrumKits(audioEngine.audioContext, null);
@@ -89,7 +89,7 @@ export function FLStudioApp(): JSX.Element {
   const patterns = usePatterns({ defaultSteps: 16 });
 
   // Undo/Redo (ready for future use)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+   
   const _undoRedo = useUndoRedo(100);
   void _undoRedo; // Mark as intentionally unused
 
@@ -99,10 +99,10 @@ export function FLStudioApp(): JSX.Element {
   const tools = useTools();
   const hintPanel = useHintPanel();
   // Context menu and mouse interactions are available for use in components
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+   
   const contextMenu = useContextMenu();
   void contextMenu; // Mark as intentionally unused
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+   
   const mouseInteractions = useMouseInteractions({ enabled: true });
   void mouseInteractions; // Mark as intentionally unused
   
@@ -127,12 +127,13 @@ export function FLStudioApp(): JSX.Element {
         return;
       }
 
-      tracks.tracks.forEach(async (track) => {
+      tracks.tracks.forEach((track) => {
         if (track.steps[currentStep] && !track.muted) {
-          try {
-            if (audioEngine.audioContext && audioEngine.audioContext.state === 'suspended') {
-              await audioEngine.audioContext.resume();
-            }
+          void (async () => {
+            try {
+              if (audioEngine.audioContext && audioEngine.audioContext.state === 'suspended') {
+                await audioEngine.audioContext.resume();
+              }
 
             if (audioEngine.audioContext && audioEngine.audioContext.state === 'running') {
               if (track.samplePlayer && typeof (window as { SamplePlayer?: unknown }).SamplePlayer !== 'undefined') {
@@ -160,6 +161,7 @@ export function FLStudioApp(): JSX.Element {
           } catch {
             // Silent error handling
           }
+          })();
         }
       });
     },
@@ -515,7 +517,7 @@ export function FLStudioApp(): JSX.Element {
           try {
             loopService.setLoopRegion(start, end);
             setLoopEnabled(true);
-          } catch (error) {
+          } catch {
             // Handle error silently or show user notification
           }
         }}

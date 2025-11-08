@@ -54,7 +54,7 @@ async function generateSamples(): Promise<void> {
     const audioContext = new AudioContext({ sampleRate: 44100 }) as unknown as AudioContext;
 
     // Dynamically import the generator
-    const generatorPath = join(__dirname, '../src/audio/drums/DrumSampleGenerator.ts');
+    const _generatorPath = join(__dirname, '../src/audio/drums/DrumSampleGenerator.ts');
     
     // Since we can't directly import TypeScript in Node.js without compilation,
     // we'll inline the generation logic here for the build script
@@ -101,12 +101,12 @@ export const SAMPLE_COUNT = ${sampleData.length};
 
     writeFileSync(outputPath, tsContent, 'utf-8');
 
-    // eslint-disable-next-line no-console
+     
     console.log(`✅ Generated ${sampleData.length} drum samples`);
-    // eslint-disable-next-line no-console
+     
     console.log(`📁 Output: ${outputPath}`);
   } catch (error) {
-    // eslint-disable-next-line no-console
+     
     console.error('❌ Error generating samples:', error);
     process.exit(1);
   }
@@ -640,7 +640,7 @@ function audioBufferToWav(buffer: AudioBuffer): string {
 
 // Run the generator
 generateSamples().catch((error) => {
-  // eslint-disable-next-line no-console
+   
   console.error('Failed to generate samples:', error);
   process.exit(1);
 });

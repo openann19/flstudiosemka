@@ -21,9 +21,9 @@ interface UseArrangementsReturn {
 }
 
 // Parameter names in function types are for documentation only
-/* eslint-disable no-unused-vars */
+ 
 type BarsToBeatsFunction = (bars: number, beatsPerBar: number) => number;
-/* eslint-enable no-unused-vars */
+ 
 
 /**
  * Hook for managing arrangements state

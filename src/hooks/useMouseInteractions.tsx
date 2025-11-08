@@ -6,8 +6,7 @@
 
 import { useEffect, useCallback, useRef } from 'react';
 import {
-  mouseInteractionService,
-  MouseInteractionService,
+  mouseInteractionService
 } from '../services/MouseInteractionService';
 import type {
   ScrollHandler,
@@ -15,7 +14,8 @@ import type {
   DragStartHandler,
   DropHandler,
   DragHandler,
-} from '../services/MouseInteractionService';
+
+  MouseInteractionService} from '../services/MouseInteractionService';
 import type { ScrollInteractionOptions } from '../types/mouse';
 
 /**

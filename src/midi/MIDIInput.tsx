@@ -103,7 +103,7 @@ export class MIDIInput {
       }
 
       return true;
-    } catch (error) {
+    } catch {
       this.isSupported = false;
       return false;
     }

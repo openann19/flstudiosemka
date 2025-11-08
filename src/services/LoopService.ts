@@ -164,7 +164,7 @@ export class LoopService {
     this.listeners.forEach((listener) => {
       try {
         listener(region);
-      } catch (error) {
+      } catch {
         // Ignore listener errors
       }
     });

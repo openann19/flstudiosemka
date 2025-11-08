@@ -233,7 +233,7 @@ export class EQBand {
    * @param frequency - Center frequency
    * @returns Approximate Q value
    */
-  private calculateSlopeToQ(slope: number, frequency: number): number {
+  private calculateSlopeToQ(slope: number, _frequency: number): number {
     // Simplified conversion: slope to Q approximation
     // Standard shelf filters: 6dB/oct = Q ~0.7, 12dB/oct = Q ~0.5, etc.
     // This is an approximation - PRO Q 4 uses more precise calculations
@@ -433,7 +433,7 @@ export class EQBand {
       this.inputNode.disconnect();
       this.filter.disconnect();
       this.bypassGain.disconnect();
-    } catch (error) {
+    } catch {
       // Already disconnected - ignore
     }
   }

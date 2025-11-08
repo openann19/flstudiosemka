@@ -6,7 +6,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { SamplePackBank } from '../audio/drums/SamplePackBank';
-import { InstrumentManager } from '../audio/InstrumentManager';
+import type { InstrumentManager } from '../audio/InstrumentManager';
 
 /**
  * Return type for useDrumKits hook
@@ -87,7 +87,7 @@ export function useDrumKits(
                 }
               );
             } catch (err) {
-              // eslint-disable-next-line no-console
+               
               console.error(`[DEBUG] useDrumKits: Failed to register instrument for ${category}`, err);
             }
           }
@@ -100,7 +100,7 @@ export function useDrumKits(
     } catch (err) {
       const error = err instanceof Error ? err : new Error(String(err));
       setError(error);
-      // eslint-disable-next-line no-console
+       
       console.error('[DEBUG] useDrumKits: Failed to initialize', error);
     } finally {
       setIsLoading(false);
@@ -113,7 +113,7 @@ export function useDrumKits(
   useEffect(() => {
     if (audioContext && !initializationRef.current && !isLoading && !isInitialized) {
       initialize().catch((err) => {
-        // eslint-disable-next-line no-console
+         
         console.error('[DEBUG] useDrumKits: Auto-initialization failed', err);
       });
     }

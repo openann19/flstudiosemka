@@ -9,8 +9,8 @@ import type {
   ModulationSource,
   ModulationDestination,
 } from '../../../types/synthesizer.types';
-import { ModulationSource as BaseModulationSource } from './ModulationSource';
-import { ModulationTarget as BaseModulationTarget } from './ModulationTarget';
+import type { ModulationSource as BaseModulationSource } from './ModulationSource';
+import type { ModulationTarget as BaseModulationTarget } from './ModulationTarget';
 import { logger } from '../../../utils/logger';
 
 /**

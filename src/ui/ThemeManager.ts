@@ -54,7 +54,7 @@ class ThemeManager {
    */
   applyTheme(themeName: string): void {
     if (!this.themes[themeName]) {
-      // eslint-disable-next-line no-console
+       
       console.warn(`ThemeManager: Theme '${themeName}' not found`);
       return;
     }
@@ -72,7 +72,7 @@ class ThemeManager {
     try {
       localStorage.setItem('fl-theme', themeName);
     } catch (e) {
-      // eslint-disable-next-line no-console
+       
       console.warn('ThemeManager: Failed to save theme', e);
     }
   }
@@ -87,7 +87,7 @@ class ThemeManager {
         this.currentTheme = saved;
       }
     } catch (e) {
-      // eslint-disable-next-line no-console
+       
       console.warn('ThemeManager: Failed to load theme', e);
     }
   }

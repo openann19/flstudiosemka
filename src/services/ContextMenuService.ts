@@ -4,7 +4,6 @@
  * @module services/ContextMenuService
  */
 
-import { contextMenu } from '../ui/ContextMenu';
 import type { ContextMenuItem } from '../ui/ContextMenu';
 import type { Track } from '../types/FLStudio.types';
 

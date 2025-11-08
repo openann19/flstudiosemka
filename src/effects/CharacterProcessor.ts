@@ -31,7 +31,7 @@ export interface CharacterConfig {
  */
 export class CharacterProcessor {
   // AudioContext stored for future use (e.g., creating additional nodes)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+   
   private _audioContext: AudioContext;
 
   private waveshaper: WaveShaperNode;
@@ -113,7 +113,7 @@ export class CharacterProcessor {
           y = Math.sign(x) * (1 - Math.exp(-Math.abs(x) * (1 + amount * 2)));
           break;
 
-        case CharacterMode.Warm:
+        case CharacterMode.Warm: {
           // Tube-style saturation
           // More pronounced soft clipping
           const drive = 1 + amount * 3;
@@ -124,6 +124,7 @@ export class CharacterProcessor {
             y = Math.sign(x) * (1 - Math.exp(-absX * drive));
           }
           break;
+        }
 
         default:
           y = x;
@@ -234,7 +235,7 @@ export class CharacterProcessor {
       this.dryGain.disconnect();
       this.wetGain.disconnect();
       this.outputGain.disconnect();
-    } catch (error) {
+    } catch {
       // Already disconnected - ignore
     }
   }

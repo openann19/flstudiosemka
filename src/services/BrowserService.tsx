@@ -3,7 +3,7 @@
  * Strict TypeScript implementation with comprehensive error handling
  */
 
-import type { SoundLibrary, SoundItem, TrackType } from '../types/FLStudio.types';
+import type { SoundLibrary, SoundItem } from '../types/FLStudio.types';
 import type { SamplePackBank } from '../audio/drums/SamplePackBank';
 
 export class BrowserService {
@@ -166,7 +166,7 @@ export class BrowserService {
       if (event.target && event.target instanceof HTMLElement) {
         event.target.classList.add('dragging');
       }
-    } catch (error) {
+    } catch {
       throw new Error(`BrowserService: Failed to handle sound drag start - ${error}`);
     }
   }
@@ -187,7 +187,7 @@ export class BrowserService {
 
       const sound = JSON.parse(data) as SoundItem;
       return sound;
-    } catch (error) {
+    } catch {
       return null;
     }
   }
@@ -248,7 +248,7 @@ export class BrowserService {
       }
 
       return [];
-    } catch (error) {
+    } catch {
       throw new Error(`BrowserService: Failed to get sounds by category - ${error}`);
     }
   }
@@ -284,7 +284,7 @@ export class BrowserService {
           }
         }
       }
-    } catch (error) {
+    } catch {
       throw new Error(`BrowserService: Failed to add custom sound - ${error}`);
     }
   }

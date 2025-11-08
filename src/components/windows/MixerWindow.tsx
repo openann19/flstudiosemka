@@ -84,7 +84,7 @@ function MixerTrackEffectSlots({
       if (slot.effectInstance && slot.enabled) {
         try {
           effectChain.addEffect(slot.effectInstance, index);
-        } catch (error) {
+        } catch {
           // Ignore errors (effect might be invalid)
         }
       }
@@ -171,6 +171,12 @@ export const MixerWindow = memo<MixerWindowProps>(function MixerWindow({
   const animationFrameRef = useRef<number | null>(null);
   const lastMeterUpdateRef = useRef<number>(0);
   const METERING_THROTTLE_MS = 33; // ~30fps (33ms per frame)
+
+  // Get effect slots for selected track (use 0 as fallback when no track selected)
+  const selectedEffectSlots = useEffectSlots(
+    selectedTrackId ?? 0,
+    audioContextRef.current
+  );
 
   // Get audio context from first track mixer
   useEffect(() => {
@@ -715,10 +721,9 @@ export const MixerWindow = memo<MixerWindowProps>(function MixerWindow({
           </div>
           <EffectLibrary
             onEffectSelect={(effectType) => {
-              if (selectedTrackId !== null && selectedSlotIndex !== null && audioContextRef.current) {
+              if (selectedSlotIndex !== null && selectedTrackId !== null) {
                 // Add effect to selected slot
-                const effectSlots = useEffectSlots(selectedTrackId, audioContextRef.current);
-                effectSlots.addEffect(selectedSlotIndex, effectType);
+                selectedEffectSlots.addEffect(selectedSlotIndex, effectType);
               }
             }}
           />

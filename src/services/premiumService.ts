@@ -44,7 +44,7 @@ class PremiumService {
         };
       }
     } catch (error) {
-      // eslint-disable-next-line no-console
+       
       console.warn('[PremiumService] Failed to load state:', error);
     }
     return {
@@ -63,7 +63,7 @@ class PremiumService {
     try {
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this._state));
     } catch (error) {
-      // eslint-disable-next-line no-console
+       
       console.error('[PremiumService] Failed to save state:', error);
     }
   }
@@ -77,7 +77,7 @@ class PremiumService {
       try {
         listener(this._state);
       } catch (error) {
-        // eslint-disable-next-line no-console
+         
         console.error('[PremiumService] Listener error:', error);
       }
     });
@@ -186,7 +186,7 @@ class PremiumService {
     try {
       callback(this._state);
     } catch (error) {
-      // eslint-disable-next-line no-console
+       
       console.error('[PremiumService] Initial callback error:', error);
     }
 

@@ -106,7 +106,7 @@ export abstract class EnvelopeModule implements IEnvelopeModule {
     try {
       this.gainNode.gain.setValueAtTime(startValue, startTime);
       this.gainNode.gain.linearRampToValueAtTime(endValue, endTime);
-    } catch (error) {
+    } catch {
       // Silent error handling
     }
   }
@@ -126,7 +126,7 @@ export abstract class EnvelopeModule implements IEnvelopeModule {
       const safeEnd = Math.max(endValue, minValue);
       this.gainNode.gain.setValueAtTime(safeStart, startTime);
       this.gainNode.gain.exponentialRampToValueAtTime(safeEnd, endTime);
-    } catch (error) {
+    } catch {
       // Silent error handling
     }
   }

@@ -4,7 +4,7 @@
  * @module audio/synthesizer/effects/EffectsChain
  */
 
-import { EffectModule } from './EffectModule';
+import type { EffectModule } from './EffectModule';
 
 /**
  * Effects chain configuration

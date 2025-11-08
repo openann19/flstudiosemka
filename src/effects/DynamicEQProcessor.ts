@@ -195,7 +195,7 @@ export class DynamicEQProcessor {
       this.expander.disconnect();
       this.attackGain.disconnect();
       this.releaseGain.disconnect();
-    } catch (error) {
+    } catch {
       // Ignore disconnection errors
     }
 
@@ -444,7 +444,7 @@ export class DynamicEQProcessor {
       this.attackGain.disconnect();
       this.releaseGain.disconnect();
       this.makeupGain.disconnect();
-    } catch (error) {
+    } catch {
       // Already disconnected - ignore
     }
   }

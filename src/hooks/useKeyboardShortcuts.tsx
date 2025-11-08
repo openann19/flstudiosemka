@@ -5,9 +5,10 @@
  */
 
 import { useEffect, useCallback, useRef } from 'react';
+import type {
+  KeyboardShortcutService} from '../services/KeyboardShortcutService';
 import {
-  keyboardShortcutService,
-  KeyboardShortcutService,
+  keyboardShortcutService
 } from '../services/KeyboardShortcutService';
 import type {
   ShortcutCombination,
@@ -98,7 +99,7 @@ export function useKeyboardShortcuts(
           finalOptions
         );
         registeredIdsRef.current.add(id);
-      } catch (error) {
+      } catch {
         // Error handling - could emit to error boundary
         if (error instanceof Error) {
           // Silent error handling per user rules
@@ -123,7 +124,7 @@ export function useKeyboardShortcuts(
     (id: string, combination: ShortcutCombination): void => {
       try {
         keyboardShortcutService.updateShortcut(id, combination);
-      } catch (error) {
+      } catch {
         // Silent error handling
       }
     },

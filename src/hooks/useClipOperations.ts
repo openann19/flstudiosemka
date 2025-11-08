@@ -9,7 +9,7 @@ import type { Arrangement, Clip } from '../types/FLStudio.types';
 import { updateTrackClips, findClipInArrangement } from './usePlaylist.utils';
 
 // Parameter names in function types are for documentation only
-/* eslint-disable no-unused-vars */
+ 
 interface UseClipOperationsProps {
   getCurrentArrangement: () => Arrangement | null;
   setArrangements: Dispatch<SetStateAction<Arrangement[]>>;
@@ -28,7 +28,7 @@ interface UseClipOperationsReturn {
   duplicateClip: (clipId: string, offsetBeats: number) => Clip | null;
   updateClipTiming: (clipId: string, updates: { start?: number; length?: number }) => Clip | null;
 }
-/* eslint-enable no-unused-vars */
+ 
 
 /**
  * Hook for managing clip operations

@@ -165,7 +165,7 @@ class CommandPalette {
               );
               this.flStudio.audioRenderer.exportWAV?.(buffer, `${this.flStudio.projectName}.wav`);
             } catch (error) {
-              // eslint-disable-next-line no-console
+               
               console.error('Failed to export audio', error);
             }
           }
@@ -569,7 +569,7 @@ class CommandPalette {
         command.action();
         this.close();
       } catch (error) {
-        // eslint-disable-next-line no-console
+         
         console.error('CommandPalette: Error executing command', error);
       }
     }

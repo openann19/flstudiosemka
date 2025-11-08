@@ -4,7 +4,7 @@
  * @module automation/AutomationRecorder
  */
 
-import { AutomationLane } from './AutomationLane';
+import type { AutomationLane } from './AutomationLane';
 
 /**
  * Recording state

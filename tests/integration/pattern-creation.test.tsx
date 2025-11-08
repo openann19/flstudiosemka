@@ -5,7 +5,6 @@
 
 import { renderHook, act } from '@testing-library/react';
 import { usePatterns } from '../../src/hooks/usePatterns';
-import { createPatterns } from '../factories/pattern-factory';
 
 describe('Pattern Creation Workflow', () => {
   it('should create a new pattern', () => {

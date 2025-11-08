@@ -5,9 +5,10 @@
  */
 
 import { useState, useEffect, useCallback } from 'react';
+import type {
+  WindowManagerService} from '../services/WindowManagerService';
 import {
-  windowManagerService,
-  WindowManagerService,
+  windowManagerService
 } from '../services/WindowManagerService';
 import type { WindowType, WindowState, WindowLayout } from '../types/windows';
 

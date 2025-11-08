@@ -72,18 +72,14 @@ export class Compressor {
    * @throws InvalidParameterError if threshold is invalid
    */
   setThreshold(threshold: number): void {
-    try {
-      if (typeof threshold !== 'number' || Number.isNaN(threshold)) {
-        throw new InvalidParameterError('threshold', threshold, 'number');
-      }
-      if (threshold < -60 || threshold > 0) {
-        throw new InvalidParameterError('threshold', threshold, 'number between -60 and 0');
-      }
-
-      this.compressor.threshold.value = threshold;
-    } catch (error) {
-      throw error;
+    if (typeof threshold !== 'number' || Number.isNaN(threshold)) {
+      throw new InvalidParameterError('threshold', threshold, 'number');
     }
+    if (threshold < -60 || threshold > 0) {
+      throw new InvalidParameterError('threshold', threshold, 'number between -60 and 0');
+    }
+
+    this.compressor.threshold.value = threshold;
   }
 
   /**
@@ -92,7 +88,6 @@ export class Compressor {
    * @throws InvalidParameterError if ratio is invalid
    */
   setRatio(ratio: number): void {
-    try {
       if (typeof ratio !== 'number' || Number.isNaN(ratio)) {
         throw new InvalidParameterError('ratio', ratio, 'number');
       }
@@ -101,9 +96,7 @@ export class Compressor {
       }
 
       this.compressor.ratio.value = ratio;
-    } catch (error) {
-      throw error;
-    }
+
   }
 
   /**
@@ -112,16 +105,13 @@ export class Compressor {
    * @throws InvalidParameterError if attack is invalid
    */
   setAttack(attack: number): void {
-    try {
       ValidationUtils.validateTime(attack, 'attack');
       if (attack < 0.0001 || attack > 1) {
         throw new InvalidParameterError('attack', attack, 'number between 0.0001 and 1');
       }
 
       this.compressor.attack.value = attack;
-    } catch (error) {
-      throw error;
-    }
+
   }
 
   /**
@@ -130,16 +120,13 @@ export class Compressor {
    * @throws InvalidParameterError if release is invalid
    */
   setRelease(release: number): void {
-    try {
       ValidationUtils.validateTime(release, 'release');
       if (release < 0.0001 || release > 1) {
         throw new InvalidParameterError('release', release, 'number between 0.0001 and 1');
       }
 
       this.compressor.release.value = release;
-    } catch (error) {
-      throw error;
-    }
+
   }
 
   /**
@@ -148,7 +135,6 @@ export class Compressor {
    * @throws InvalidParameterError if knee is invalid
    */
   setKnee(knee: number): void {
-    try {
       if (typeof knee !== 'number' || Number.isNaN(knee)) {
         throw new InvalidParameterError('knee', knee, 'number');
       }
@@ -157,9 +143,7 @@ export class Compressor {
       }
 
       this.compressor.knee.value = knee;
-    } catch (error) {
-      throw error;
-    }
+
   }
 
   /**

@@ -223,7 +223,7 @@ export function DrumEditor({
         playback.gain.connect(audioContext.destination);
       }
     } catch (error) {
-      // eslint-disable-next-line no-console
+       
       console.error('[DEBUG] DrumEditor: Failed to preview sample', error);
     } finally {
       setIsGenerating(false);

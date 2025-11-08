@@ -33,7 +33,7 @@ class BackendConnection {
       });
       
       this.available = response.ok;
-    } catch (error) {
+    } catch {
       // Backend not available - this is expected in standalone mode
       this.available = false;
       
@@ -71,9 +71,9 @@ class BackendConnection {
       }
 
       return response;
-    } catch (error) {
+    } catch (_error) {
       // Network error or timeout
-      if (error instanceof Error && error.name !== 'AbortError') {
+      if (_error instanceof Error && _error.name !== 'AbortError') {
         // Mark backend as unavailable
         this.available = false;
       }
@@ -101,9 +101,9 @@ class BackendConnection {
 
     try {
       return await response.json() as T;
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.warn('Failed to parse JSON response:', error);
+    } catch (_error) {
+       
+      console.warn('Failed to parse JSON response:', _error);
       return null;
     }
   }
