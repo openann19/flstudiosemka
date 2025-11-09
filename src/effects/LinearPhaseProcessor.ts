@@ -246,7 +246,6 @@ export class LinearPhaseProcessor {
 
       case 'lowshelf': {
         // Low shelf filter
-        const _S = 1;
         const b0 = A * ((A + 1) - (A - 1) * cosw0 + 2 * Math.sqrt(A) * alpha);
         const b1 = 2 * A * ((A - 1) - (A + 1) * cosw0);
         const b2 = A * ((A + 1) - (A - 1) * cosw0 - 2 * Math.sqrt(A) * alpha);
@@ -269,7 +268,6 @@ export class LinearPhaseProcessor {
 
       case 'highshelf': {
         // High shelf filter
-        const _S = 1;
         const b0 = A * ((A + 1) + (A - 1) * cosw0 + 2 * Math.sqrt(A) * alpha);
         const b1 = -2 * A * ((A - 1) + (A + 1) * cosw0);
         const b2 = A * ((A + 1) + (A - 1) * cosw0 - 2 * Math.sqrt(A) * alpha);

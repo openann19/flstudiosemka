@@ -99,9 +99,9 @@ export function useKeyboardShortcuts(
           finalOptions
         );
         registeredIdsRef.current.add(id);
-      } catch {
+      } catch (err) {
         // Error handling - could emit to error boundary
-        if (error instanceof Error) {
+        if (err instanceof Error) {
           // Silent error handling per user rules
         }
       }

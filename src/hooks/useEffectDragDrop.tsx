@@ -43,8 +43,8 @@ export function useEffectDragDrop(): UseEffectDragDropReturn {
    */
   const startDrag = useCallback(
     (data: EffectDragData, event: MouseEvent | React.MouseEvent): void => {
-      const clientX = 'clientX' in event ? event.clientX : ('pageX' in event ? event.pageX : 0);
-      const clientY = 'clientY' in event ? event.clientY : ('pageY' in event ? event.pageY : 0);
+      const clientX = 'clientX' in event ? event.clientX : 0;
+      const clientY = 'clientY' in event ? event.clientY : 0;
 
       dragStartRef.current = { x: clientX, y: clientY };
       effectDragDropService.startDrag(data, clientX, clientY);
@@ -62,8 +62,8 @@ export function useEffectDragDrop(): UseEffectDragDropReturn {
         return;
       }
 
-      const clientX = 'clientX' in event ? event.clientX : ('pageX' in event ? event.pageX : 0);
-      const clientY = 'clientY' in event ? event.clientY : ('pageY' in event ? event.pageY : 0);
+      const clientX = 'clientX' in event ? event.clientX : 0;
+      const clientY = 'clientY' in event ? event.clientY : 0;
 
       effectDragDropService.updateDragPosition(clientX, clientY);
 

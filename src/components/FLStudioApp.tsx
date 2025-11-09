@@ -79,8 +79,6 @@ export function FLStudioApp(): JSX.Element {
   const audioServiceRef = useRef<AudioService | null>(null);
   const browserServiceRef = useRef<BrowserService | null>(null);
   const performanceMonitorRef = useRef<number | null>(null);
-  const _lastPerformanceUpdateRef = useRef<number>(0);
-  const _PERFORMANCE_THROTTLE_MS = 100; // 10fps for performance monitoring (less critical)
 
   // Initialize drum kits
   const drumKits = useDrumKits(audioEngine.audioContext, null);

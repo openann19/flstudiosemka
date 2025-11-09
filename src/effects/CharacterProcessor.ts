@@ -30,10 +30,6 @@ export interface CharacterConfig {
  * Analog-style saturation processor
  */
 export class CharacterProcessor {
-  // AudioContext stored for future use (e.g., creating additional nodes)
-   
-  private _audioContext: AudioContext;
-
   private waveshaper: WaveShaperNode;
 
   private dryGain: GainNode;
@@ -59,7 +55,6 @@ export class CharacterProcessor {
       throw new AudioContextError('Invalid AudioContext provided', { audioContext });
     }
 
-    this._audioContext = audioContext;
     this.config = { ...config };
 
     // Create waveshaper for saturation
