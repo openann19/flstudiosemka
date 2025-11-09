@@ -41,8 +41,6 @@ export interface EQBandConfig {
  * Individual EQ band implementation
  */
 export class EQBand {
-  private audioContext: AudioContext;
-
   private filter: BiquadFilterNode;
 
   private bypassGain: GainNode;
@@ -67,7 +65,6 @@ export class EQBand {
       throw new AudioContextError('Invalid AudioContext provided', { audioContext });
     }
 
-    this.audioContext = audioContext;
     this.config = { ...config };
 
     // Validate configuration

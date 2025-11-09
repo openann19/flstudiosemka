@@ -42,12 +42,10 @@ export interface BatchExportOptions {
  * Handles project, stems, MIDI, and audio export
  */
 export class ProjectExporter {
-  private _audioContext: AudioContext;
   private project: ProjectData;
   private renderer: AudioRenderer;
 
   constructor(audioContext: AudioContext, project: ProjectData) {
-    this._audioContext = audioContext;
     this.project = project;
     this.renderer = new AudioRenderer(audioContext);
   }
@@ -150,7 +148,6 @@ export class ProjectExporter {
    */
   private _generateMIDI(bpm: number): Uint8Array {
     const ticksPerQuarter = 480;
-    const _microsecondsPerQuarter = 60000000 / bpm;
 
     // MIDI file structure:
     // Header chunk: "MThd" + length + format + tracks + division
@@ -295,7 +292,10 @@ export class ProjectExporter {
 
     // Set continuation bit on all but last byte
     for (let i = 0; i < bytes.length - 1; i++) {
-      bytes[i] |= 0x80;
+      const byte = bytes[i];
+      if (byte !== undefined) {
+        bytes[i] = byte | 0x80;
+      }
     }
 
     return new Uint8Array(bytes);

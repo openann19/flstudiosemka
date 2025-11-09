@@ -36,8 +36,6 @@ export interface DynamicBandConfig {
  * Frequency-specific dynamic processor
  */
 export class DynamicEQProcessor {
-  private audioContext: AudioContext;
-
   private analyser: AnalyserNode;
 
   private compressor: DynamicsCompressorNode;
@@ -67,7 +65,6 @@ export class DynamicEQProcessor {
       throw new AudioContextError('Invalid AudioContext provided', { audioContext });
     }
 
-    this.audioContext = audioContext;
     this.config = { ...config };
 
     // Validate configuration

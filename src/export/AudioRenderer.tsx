@@ -154,7 +154,7 @@ export class AudioRenderer {
     for (let i = 0; i < length; i++) {
       for (let channel = 0; channel < numberOfChannels; channel++) {
         const channelData = buffer.getChannelData(channel);
-        const sample = channelData[i];
+        const sample = channelData[i] ?? 0;
         let value: number;
 
         if (float32) {
@@ -235,7 +235,7 @@ export class AudioRenderer {
           const pcm = new Int16Array(length);
           for (let i = 0; i < length; i++) {
             // Convert float32 (-1.0 to 1.0) to int16 (-32768 to 32767)
-            const sample = Math.max(-1, Math.min(1, channelData[i]));
+            const sample = Math.max(-1, Math.min(1, channelData[i] ?? 0));
             pcm[i] = sample < 0 ? sample * 0x8000 : sample * 0x7FFF;
           }
           samples.push(pcm);
