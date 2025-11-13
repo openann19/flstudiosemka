@@ -55,9 +55,9 @@ export function useMixer(): UseMixerReturn {
       return;
     }
 
-    if (typeof window !== 'undefined' && (window as { TrackMixer?: new (ctx: AudioContext, id: number) => unknown }).TrackMixer) {
-      const TrackMixer = (window as { TrackMixer: new (ctx: AudioContext, id: number) => unknown }).TrackMixer;
-      const mixer = new TrackMixer(audioContext, trackId);
+    if (typeof window !== 'undefined' && (window as { TrackMixer?: new (ctx: AudioContext, id: string) => unknown }).TrackMixer) {
+      const TrackMixer = (window as { TrackMixer: new (ctx: AudioContext, id: string) => unknown }).TrackMixer;
+      const mixer = new TrackMixer(audioContext, String(trackId));
       trackMixersRef.current.set(trackId, mixer);
     }
   }, []);
